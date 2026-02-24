@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WNFX - Free Samples</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        body {
+            background-color: #14171C;
+            color: #FFFFFF;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* HEADER SECTION */
+        header {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 20px;
+            position: sticky;
+            top: 0;
+            background-color: #14171C;
+            z-index: 1000;
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-box { width: 34px; height: 34px; }
+        .logo-text { font-weight: 800; font-size: 22px; letter-spacing: 2px; color: #FFFFFF; }
+
+        .back-btn {
+            color: #636E7A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover { color: #23C55E; }
+        .back-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+        /* HERO SECTION */
+        .hero {
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 20px 20px;
+            text-align: center;
+        }
+
+        .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .hero p { font-size: 13px; color: #636E7A; line-height: 1.5; }
+
+        .active-indicator {
+            width: 40px;
+            height: 4px;
+            background-color: #23C55E;
+            margin: 15px auto;
+            border-radius: 10px;
+        }
+
+        /* DECORATIONS */
+        .fixed-bg-decor {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.05;
+            pointer-events: none;
+            filter: invert(1);
+        }
+        .decor-tone { bottom: 15%; left: -30px; width: 120px; transform: rotate(-15deg); }
+        .decor-note { top: 20%; right: -20px; width: 80px; transform: rotate(10deg); }
+
+        /* CONTAINER & CATEGORIES */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: #636E7A;
+            margin: 25px 0 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* GRID LAYOUT */
+        .grid-samples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .sample-card {
+            background-color: #090A0C;
+            padding: 20px 15px;
+            border-radius: 18px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .sample-card:hover {
+            border-color: #23C55E;
+            transform: translateY(-3px);
+            background-color: #14171C;
+        }
+
+        .sample-card i { font-size: 22px; color: #23C55E; }
+        .sample-card span { font-weight: 700; font-size: 13px; color: #FFFFFF; }
+        .sample-card small { font-size: 10px; color: #636E7A; font-weight: 400; }
+
+        /* PRESET PILLS (Horisontal Scrollable) */
+        .preset-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none; /* Hide scrollbar Firefox */
+        }
+        .preset-scroll::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+
+        .preset-pill {
+            background: #090A0C;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px 20px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .preset-pill:hover { border-color: #23C55E; background: #14171C; }
+        .preset-pill i { font-size: 12px; color: #23C55E; }
+        .preset-pill span { font-size: 13px; font-weight: 600; color: #FFFFFF; }
+
+        /* ANIMATION */
+        @keyframes revealUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .animate { animation: revealUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+
+        footer {
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #636E7A;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<img src="https://cdn-icons-png.flaticon.com/512/10815/10815635.png" class="fixed-bg-decor decor-tone" alt="tone">
+<img src="https://cdn-icons-png.flaticon.com/512/651/651717.png" class="fixed-bg-decor decor-note" alt="note">
+
+<header>
+    <div class="back-btn" onclick="window.location.href='index.html'">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+    </div>
+    <div class="brand-wrapper">
+        <div class="logo-box">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,50 C0,5 5,0 50,0 C95,0 100,5 100,50 C100,95 95,100 50,100 C5,100 0,95 0,50" fill="#F5F5F5"/>
+                <path d="M25,35 L40,65 L50,45 L60,65 L75,35" stroke="#14171C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+        </div>
+        <div class="logo-text">WNFX</div>
+    </div>
+    <div style="width: 22px;"></div> </header>
+
+<section class="hero">
+    <h1 class="animate" style="animation-delay: 0.1s;">Free Samples</h1>
+    <p class="animate" style="animation-delay: 0.2s;">Koleksi audio dan preset pilihan gratis untuk mempercepat kreativitas musik kamu.</p>
+    <div class="active-indicator animate" style="animation-delay: 0.3s;"></div>
+</section>
+
+<main class="container">
+    
+    <div class="section-title animate" style="animation-delay: 0.4s;">Loops & Audio</div>
+    <div class="grid-samples">
+        <a href="A/guitar.html" class="sample-card animate" style="animation-delay: 0.5s;">
+            <i class="fa-solid fa-guitar"></i>
+            <span>Guitar Loop</span>
+            <small>Acoustic & Electric vibes</small>
+        </a>
+        <a href="percussion.html" class="sample-card animate" style="animation-delay: 0.5s;">
+            <i class="fa-solid fa-drum"></i>
+            <span>Percussion Loop</span>
+            <small>High quality drum hits</small>
+        </a>
+        <a href="samplerack.html" class="sample-card animate" style="animation-delay: 0.6s;">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Sample Rack</span>
+            <small>One-shot collections</small>
+        </a>
+        <a href="audioclip.html" class="sample-card animate" style="animation-delay: 0.6s;">
+            <i class="fa-solid fa-file-audio"></i>
+            <span>Audio Clip</span>
+            <small>SFX & Foleys free</small>
+        </a>
+    </div>
+
+    <div class="section-title animate" style="animation-delay: 0.7s;">Sample Preset</div>
+    <div class="preset-scroll animate" style="animation-delay: 0.8s;">
+        <a href="supersaw.html" class="preset-pill">
+            <i class="fa-solid fa-wave-square"></i>
+            <span>Supersaw</span>
+        </a>
+        <a href="gms.html" class="preset-pill">
+            <i class="fa-solid fa-sliders"></i>
+            <span>GMS Preset</span>
+        </a>
+        <a href="minisynth.html" class="preset-pill">
+            <i class="fa-solid fa-keyboard"></i>
+            <span>Minisynth</span>
+        </a>
+    </div>
+
+    <div class="section-title animate" style="animation-delay: 0.9s;">Special Samples</div>
+    <div class="grid-samples">
+        <a href="rythm.html" class="sample-card animate" style="animation-delay: 1s;">
+            <i class="fa-solid fa-arrows-left-right"></i>
+            <span>Sample Rythm</span>
+            <small>Beat patterns & grooves</small>
+        </a>
+        <a href="teot.html" class="sample-card animate" style="animation-delay: 1s;">
+            <i class="fa-solid fa-bolt"></i>
+            <span>Sample Teot</span>
+            <small>Signature sound collection</small>
+        </a>
+    </div>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 WNFX Music. All rights reserved.<br>Dibuat untuk produser masa depan.</p>
+</footer>
+
+</body>
+</html>

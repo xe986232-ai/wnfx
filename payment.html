@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WNFX - Payment Process</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #14171C;
+            color: #FFFFFF;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMATIONS DEFINITION --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .animate {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* Delay untuk elemen berurutan */
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /* HEADER */
+        header {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 20px;
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-box { width: 34px; height: 34px; }
+        .logo-text { font-weight: 800; font-size: 22px; letter-spacing: 2px; color: #FFFFFF; }
+
+        /* PAYMENT CONTAINER */
+        .payment-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .payment-card {
+            background-color: #090A0C;
+            border-radius: 24px;
+            padding: 30px 20px;
+            border: 1px solid rgba(255,255,255,0.03);
+            margin-top: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .hero-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .active-indicator {
+            width: 40px;
+            height: 4px;
+            background-color: #23C55E;
+            margin: 10px auto 30px;
+            border-radius: 10px;
+        }
+
+        /* NOMINAL BOX */
+        .price-display {
+            background: linear-gradient(145deg, #14171C, #090A0C);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(35, 197, 94, 0.2);
+            animation: pulse 3s ease-in-out infinite; /* Efek berdenyut lembut */
+        }
+
+        .price-label {
+            font-size: 11px;
+            color: #636E7A;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .price-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #FFFFFF;
+        }
+
+        .price-value span { color: #23C55E; }
+
+        /* INSTRUCTION */
+        .instruction-box {
+            text-align: left;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+
+        .instruction-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .inst-icon {
+            width: 40px;
+            height: 40px;
+            background: #14171C;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #23C55E;
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .inst-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+        .inst-text p { font-size: 12px; color: #636E7A; line-height: 1.4; }
+
+        /* BUTTON WA */
+        .btn-confirm {
+            background-color: #23C55E;
+            color: white;
+            padding: 18px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(35, 197, 94, 0.2);
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-confirm:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 35px rgba(35, 197, 94, 0.4);
+        }
+
+        /* DECOR */
+        .fixed-bg-decor {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.05;
+            pointer-events: none;
+            filter: invert(1);
+        }
+        .decor-tone { bottom: 15%; left: -30px; width: 120px; transform: rotate(-15deg); }
+        .decor-note { top: 20%; right: -20px; width: 80px; transform: rotate(10deg); }
+
+        .footer-note {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #636E7A;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<img src="https://cdn-icons-png.flaticon.com/512/10815/10815635.png" class="fixed-bg-decor decor-tone" alt="tone icon">
+<img src="https://cdn-icons-png.flaticon.com/512/651/651717.png" class="fixed-bg-decor decor-note" alt="note icon">
+
+<header class="animate">
+    <div class="brand-wrapper">
+        <div class="logo-box">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,50 C0,5 5,0 50,0 C95,0 100,5 100,50 C100,95 95,100 50,100 C5,100 0,95 0,50" fill="#F5F5F5"/>
+                <path d="M25,35 L40,65 L50,45 L60,65 L75,35" stroke="#14171C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+        </div>
+        <div class="logo-text">WNFX</div>
+    </div>
+</header>
+
+<main class="payment-container">
+    <h1 class="hero-title animate delay-1">Selesaikan Pembayaran</h1>
+    <div class="active-indicator animate delay-1"></div>
+
+    <div class="payment-card animate delay-2">
+        <div class="price-display">
+            <p class="price-label">Total Pembayaran</p>
+            <div class="price-value">Rp <span id="nominalUnik">...</span></div>
+        </div>
+
+        <div class="instruction-box">
+            <div class="instruction-item animate delay-3">
+                <div class="inst-icon"><i class="fa-solid fa-wallet"></i></div>
+                <div class="inst-text">
+                    <h4>Transfer ke DANA</h4>
+                    <p>0812-XXXX-XXXX (A/N RADENN)</p>
+                </div>
+            </div>
+            <div class="instruction-item animate delay-4">
+                <div class="inst-icon"><i class="fa-solid fa-receipt"></i></div>
+                <div class="inst-text">
+                    <h4>Simpan Bukti</h4>
+                    <p>Screenshot bukti transaksi berhasil kamu.</p>
+                </div>
+            </div>
+            <div class="instruction-item animate delay-5">
+                <div class="inst-icon"><i class="fa-solid fa-comment-dots"></i></div>
+                <div class="inst-text">
+                    <h4>Konfirmasi ke Admin</h4>
+                    <p>Kirim bukti ke WhatsApp untuk ambil file.</p>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="kirimKeWA()" class="btn-confirm animate delay-5">
+            <i class="fa-brands fa-whatsapp"></i>
+            KIRIM BUKTI KE ADMIN
+        </button>
+
+        <p class="footer-note animate delay-5">
+            Pesanan akan diproses secara manual oleh Admin.<br>
+            Harap menunggu maksimal 1x24 jam (Biasanya cepat).
+        </p>
+    </div>
+</main>
+
+<script>
+    // 1. Ambil data dari URL Parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const hargaAsli = parseInt(urlParams.get('harga')) || 0;
+    const namaLayanan = urlParams.get('layanan') || "Layanan WNFX";
+    
+    // 2. Tampilkan di layar (Tanpa Kode Unik / Harga Asli)
+    if (hargaAsli > 0) {
+        document.getElementById('nominalUnik').innerText = hargaAsli.toLocaleString('id-ID');
+        document.querySelector('.hero-title').innerText = `Bayar ${namaLayanan}`;
+    } else {
+        document.getElementById('nominalUnik').innerText = "---";
+    }
+
+    // 3. Fungsi Tombol WhatsApp (Menyertakan Detail Pesanan & User ID)
+    function kirimKeWA() {
+        // Mendapatkan UserID dari LocalStorage (pastikan tersimpan saat login)
+        const userId = localStorage.getItem('userId') || "User_Tidak_Terdeteksi";
+        const nomorAdmin = "6283129555763"; 
+        
+        const text = `Halo Admin WNFX! 👋%0A%0ASaya ingin konfirmasi pembayaran.%0A%0A• *Layanan:* ${namaLayanan}%0A• *Total Transfer:* Rp ${hargaAsli.toLocaleString('id-ID')}%0A• *User ID:* ${userId}%0A%0A*Saya akan lampirkan bukti transfer setelah pesan ini.*`;
+        
+        window.location.href = `https://wa.me/${nomorAdmin}?text=${text}`;
+    }
+</script>
+
+</body>
+</html>

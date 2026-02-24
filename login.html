@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - WNFX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #14171C;
+            color: #FFFFFF;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(180deg, #14171C 0%, #090A0C 100%);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* LOGO AREA */
+        .logo-section {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-box {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-text {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* FORM BOX */
+        .form-box {
+            background: #090A0C;
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(35, 197, 94, 0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: #636E7A;
+            margin-bottom: 5px;
+            margin-left: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: #14171C;
+            border: 1px solid transparent;
+            padding: 12px 15px;
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #23C55E;
+            background: #090A0C;
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            width: 100%;
+            background: #23C55E;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .divider {
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            color: #636E7A;
+            font-size: 12px;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(99, 110, 122, 0.3);
+            margin: 0 10px;
+        }
+
+        .btn-google {
+            width: 100%;
+            background: white;
+            color: #14171C;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-google:hover {
+            background: #f1f1f1;
+        }
+
+        .toggle-text {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #636E7A;
+        }
+
+        .toggle-text span {
+            color: #23C55E;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="logo-section">
+        <div class="logo-box">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,50 C0,5 5,0 50,0 C95,0 100,5 100,50 C100,95 95,100 50,100 C5,100 0,95 0,50" fill="#F5F5F5"/>
+                <path d="M25,35 L40,65 L50,45 L60,65 L75,35" stroke="#14171C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+        </div>
+        <div class="logo-text">WNFX</div>
+    </div>
+
+    <div class="form-box">
+        <h2 id="formTitle">Selamat Datang</h2>
+        
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="nama@email.com">
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+
+        <button class="btn-primary" id="mainBtn" onclick="handleEmailAuth()">Masuk</button>
+
+        <div class="divider">Atau</div>
+
+        <button class="btn-google" onclick="handleGoogleLogin()">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18">
+            Lanjutkan dengan Google
+        </button>
+
+        <p class="toggle-text" id="toggleText">
+            Belum punya akun? <span onclick="toggleMode()">Daftar</span>
+        </p>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { 
+        getAuth, 
+        signInWithPopup, 
+        GoogleAuthProvider, 
+        signInWithEmailAndPassword, 
+        createUserWithEmailAndPassword 
+    } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAaPyl0-gKKhxKjhyCmqduUF11N6C1ngZ4",
+        authDomain: "omwnfx1.firebaseapp.com",
+        projectId: "omwnfx1",
+        storageBucket: "omwnfx1.firebasestorage.app",
+        messagingSenderId: "1063248927187",
+        appId: "1:1063248927187:web:6bd23f24517b1c2d53b726"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Paksa pilih akun agar tidak otomatis login ke akun lama
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    let isLoginMode = true;
+
+    // Toggle antara Login dan Sign Up
+    window.toggleMode = () => {
+        isLoginMode = !isLoginMode;
+        document.getElementById('formTitle').innerText = isLoginMode ? 'Selamat Datang' : 'Buat Akun Baru';
+        document.getElementById('mainBtn').innerText = isLoginMode ? 'Masuk' : 'Daftar Sekarang';
+        document.getElementById('toggleText').innerHTML = isLoginMode ? 
+            'Belum punya akun? <span onclick="toggleMode()">Daftar</span>' : 
+            'Sudah punya akun? <span onclick="toggleMode()">Masuk</span>';
+    };
+
+    // Handle Login/Daftar Email
+    window.handleEmailAuth = async () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        if(!email || !password) return alert("Isi semua bidang!");
+
+        try {
+            if (isLoginMode) {
+                await signInWithEmailAndPassword(auth, email, password);
+            } else {
+                await createUserWithEmailAndPassword(auth, email, password);
+            }
+            window.location.href = "index.html";
+        } catch (error) {
+            alert("Terjadi kesalahan: " + error.message);
+        }
+    };
+
+    // Handle Google Login
+    window.handleGoogleLogin = async () => {
+        try {
+            await signInWithPopup(auth, provider);
+            window.location.href = "index.html"; // Balik ke halaman utama setelah login
+        } catch (error) {
+            console.error("Gagal Login Google:", error);
+        }
+    };
+</script>
+
+</body>
+</html>

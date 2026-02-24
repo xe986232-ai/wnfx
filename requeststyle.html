@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WNFX - Pembuatan Music</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* BASE STYLE & COLORS - MENIRU PERSIS */
+        :root {
+            --bg-main: #14171C;
+            --bg-card: #090A0C;
+            --accent-green: #23C55E;
+            --text-main: #FFFFFF;
+            --text-muted: #636E7A;
+            --border-color: #2A2F37;
+            --bounce-transition: all 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            padding-bottom: 120px; 
+            position: relative;
+        }
+
+        /* ANIMASI MASUK KENYAL */
+        @keyframes fadeInSlideKenyal {
+            from { opacity: 0; transform: translateY(30px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .animate-item {
+            opacity: 0;
+            animation: fadeInSlideKenyal 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 20px;
+            position: sticky;
+            top: 0;
+            background-color: rgba(20, 23, 28, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .home-btn {
+            position: absolute;
+            left: 20px;
+            color: white;
+            cursor: pointer;
+            transition: var(--bounce-transition);
+        }
+        .home-btn:active { transform: scale(0.7); }
+
+        /* TOMBOL RIWAYAT KANAN ATAS */
+        .history-btn {
+            position: absolute;
+            right: 20px;
+            color: white;
+            cursor: pointer;
+            transition: var(--bounce-transition);
+        }
+        .history-btn:active { transform: scale(0.7); }
+
+        .brand-name {
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: 2px;
+            color: #FFFFFF;
+        }
+
+        .section-info { padding: 30px 20px; }
+        .section-info h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1.2; color: #FFFFFF; }
+        .section-info p { color: var(--text-muted); font-size: 14px; }
+
+        /* FORM STYLE */
+        .order-form { padding: 0 20px; }
+        .form-group { margin-bottom: 25px; position: relative; }
+        label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 10px; color: var(--text-muted); }
+
+        /* DROPDOWN CUSTOM */
+        .custom-select { position: relative; user-select: none; z-index: 10; }
+        .form-group:nth-child(1) .custom-select { z-index: 20; } 
+
+        .select-selected {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--bounce-transition);
+        }
+        .select-selected:active { transform: scale(0.98); }
+
+        .select-selected:after {
+            content: "\f078";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        .select-selected.select-arrow-active:after { transform: rotate(180deg); }
+        .select-items {
+            position: absolute;
+            background-color: #0c0e12;
+            top: 105%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .select-items div { padding: 15px; cursor: pointer; font-size: 14px; transition: 0.2s; }
+        .select-items div:hover { background-color: #1a1e26; color: var(--accent-green); }
+        .select-show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        input, select {
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: var(--bounce-transition);
+        }
+        input:focus { border-color: var(--accent-green); }
+
+        .dynamic-field { display: none; animation: slideDown 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6) forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ACTION AREA */
+        .action-area {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            padding: 25px 20px;
+            background: linear-gradient(to top, var(--bg-main) 70%, transparent);
+            z-index: 110;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-submit {
+            width: 80%;
+            background-color: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(35, 197, 94, 0.3);
+            transition: var(--bounce-transition);
+        }
+
+        .btn-submit:disabled { background-color: #2a2f37; color: #636E7A; box-shadow: none; cursor: not-allowed; }
+        .btn-submit:active { transform: scale(0.9); }
+
+        /* MODAL POPUP */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-green);
+            border-radius: 25px;
+            padding: 30px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(35, 197, 94, 0.2);
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(35, 197, 94, 0.1);
+            color: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 20px;
+        }
+
+        .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 10px; color: #FFFFFF; }
+        .modal-text { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 25px; }
+        #queueInfo { color: var(--accent-green); font-weight: 800; display: block; margin-top: 10px; font-size: 16px; }
+
+        .btn-modal-close {
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <div class="home-btn" onclick="window.location.href='index.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+            <div class="brand-name">WNFX</div>
+            <div class="history-btn" onclick="window.location.href='riwayatmusic.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+        </header>
+
+        <div class="section-info animate-item delay-1">
+            <h1>Request Music</h1>
+            <p>Buat melody atau style musik sesuai keinginanmu.</p>
+        </div>
+
+        <main class="order-form animate-item delay-2">
+            <div class="form-group">
+                <label>Mau buat apa hari ini?</label>
+                <div class="custom-select">
+                    <div class="select-selected" id="mainCatSelected">Pilih Layanan</div>
+                    <div class="select-items" id="mainCatItems">
+                        <div data-value="melody">Buat Melody</div>
+                        <div data-value="style">Request Style</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="melodyArea" class="dynamic-field">
+                <div class="form-group">
+                    <label>Metode Input</label>
+                    <select id="melMode" onchange="toggleMelInput(this.value)">
+                        <option value="file">Upload File Audio</option>
+                        <option value="link">Input Link Referensi</option>
+                    </select>
+                </div>
+                <div class="form-group" id="melFileInput">
+                    <label>Pilih File Melody</label>
+                    <input type="file" id="melodyFile" accept="audio/*">
+                </div>
+                <div class="form-group" id="melLinkInput" style="display:none;">
+                    <label>Link Referensi Melody</label>
+                    <input type="url" id="melodyLink" placeholder="https://youtube.com/...">
+                </div>
+            </div>
+
+            <div id="styleArea" class="dynamic-field">
+                <div class="form-group">
+                    <label>Pilih Style / Genre</label>
+                    <select id="genreSelect" onchange="checkCustomGenre(this.value)">
+                        <option value="">-- Memuat Genre --</option>
+                        <option value="CUSTOM">CUSTOM STYLE</option>
+                    </select>
+                </div>
+                <div class="form-group" id="customGenreArea" style="display:none;">
+                    <label>Link Contoh Genre</label>
+                    <input type="url" id="customGenreLink" placeholder="Masukkan link genre...">
+                </div>
+                <div class="form-group">
+                    <label>Gunakan Vocal?</label>
+                    <select id="vocalType" onchange="toggleVocalInput(this.value)">
+                        <option value="none">Tanpa Vocal</option>
+                        <option value="upload">Upload File Vocal</option>
+                        <option value="remover">Vocal Remover (Link)</option>
+                    </select>
+                </div>
+                <div class="form-group" id="vocalFileInput" style="display:none;">
+                    <label>Upload File Vocal</label>
+                    <input type="file" id="vocalFile" accept="audio/*">
+                </div>
+                <div class="form-group" id="vocalLinkInput" style="display:none;">
+                    <label>Link Lagu (Vocal Remover)</label>
+                    <input type="url" id="vocalLink" placeholder="Masukkan link lagu...">
+                </div>
+                <div class="form-group">
+                    <label>Durasi (Menit)</label>
+                    <input type="number" id="duration" value="1" min="1" max="10">
+                </div>
+            </div>
+        </main>
+
+        <div class="action-area animate-item" style="animation-delay: 0.5s;">
+            <button class="btn-submit" id="btnSubmitOrder">KIRIM PESANAN</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-box">
+            <div class="modal-icon"><i class="fa-solid fa-check"></i></div>
+            <h3 class="modal-title">Pesanan Terkirim!</h3>
+            <p class="modal-text">Pesanan Anda telah diterima dan akan segera ditinjau oleh admin. <span id="queueInfo"></span></p>
+            <button class="btn-modal-close" onclick="closeModal()">Selesai</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, push, set, serverTimestamp, runTransaction, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAaPyl0-gKKhxKjhyCmqduUF11N6C1ngZ4",
+            authDomain: "omwnfx1.firebaseapp.com",
+            databaseURL: "https://omwnfx1-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "omwnfx1",
+            storageBucket: "omwnfx1.firebasestorage.app",
+            messagingSenderId: "1063248927187",
+            appId: "1:1063248927187:web:6bd23f24517b1c2d53b726"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const fs = getFirestore(app);
+        const auth = getAuth(app);
+
+        const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/ddjn8t2zs/auto/upload";
+        const UPLOAD_PRESET = "omwnfx";
+
+        let currentUserId = null;
+        onAuthStateChanged(auth, (user) => {
+            if (user) { currentUserId = user.uid; } 
+            else { window.location.href = "login.html"; }
+        });
+
+        // UI LOGIC
+        const melodyArea = document.getElementById('melodyArea');
+        const styleArea = document.getElementById('styleArea');
+
+        function setupCustomSelect(selectedId, itemsId, callback) {
+            const selected = document.getElementById(selectedId);
+            const items = document.getElementById(itemsId);
+            const options = items.querySelectorAll('div');
+
+            selected.addEventListener('click', (e) => {
+                e.stopPropagation();
+                items.classList.toggle('select-show');
+                selected.classList.toggle('select-arrow-active');
+            });
+
+            options.forEach(opt => {
+                opt.addEventListener('click', function() {
+                    selected.innerText = this.innerText;
+                    selected.setAttribute('data-value', this.getAttribute('data-value'));
+                    items.classList.remove('select-show');
+                    selected.classList.remove('select-arrow-active');
+                    callback(this.getAttribute('data-value'));
+                });
+            });
+        }
+
+        setupCustomSelect('mainCatSelected', 'mainCatItems', (val) => {
+            melodyArea.style.display = val === 'melody' ? 'block' : 'none';
+            styleArea.style.display = val === 'style' ? 'block' : 'none';
+        });
+
+        window.toggleMelInput = (val) => {
+            document.getElementById('melFileInput').style.display = val === 'file' ? 'block' : 'none';
+            document.getElementById('melLinkInput').style.display = val === 'link' ? 'block' : 'none';
+        };
+
+        window.toggleVocalInput = (val) => {
+            document.getElementById('vocalFileInput').style.display = val === 'upload' ? 'block' : 'none';
+            document.getElementById('vocalLinkInput').style.display = val === 'remover' ? 'block' : 'none';
+        };
+
+        window.checkCustomGenre = (val) => {
+            document.getElementById('customGenreArea').style.display = val === 'CUSTOM' ? 'block' : 'none';
+        };
+
+        async function uploadToCloudinary(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', UPLOAD_PRESET);
+            const resp = await fetch(CLOUDINARY_URL, { method: 'POST', body: formData });
+            const data = await resp.json();
+            return data.secure_url;
+        }
+
+        window.closeModal = () => { window.location.href = "riwayatmusic.html"; };
+
+        // SUBMIT LOGIC
+        document.getElementById('btnSubmitOrder').onclick = async () => {
+            const mainCat = document.getElementById('mainCatSelected').getAttribute('data-value');
+            if (!mainCat) return alert("Pilih layanan dulu!");
+            if (!currentUserId) return window.location.href = "login.html";
+
+            const btn = document.getElementById('btnSubmitOrder');
+            btn.disabled = true;
+            btn.innerText = "MENGIRIM...";
+
+            try {
+                let sourceData = "";
+                let details = {};
+
+                if (mainCat === 'melody') {
+                    const mode = document.getElementById('melMode').value;
+                    if (mode === 'file') {
+                        const file = document.getElementById('melodyFile').files[0];
+                        if (!file) throw new Error("Pilih file audio!");
+                        sourceData = await uploadToCloudinary(file);
+                    } else {
+                        sourceData = document.getElementById('melodyLink').value;
+                        if (!sourceData) throw new Error("Masukkan link!");
+                    }
+                    details = { type: "Buat Melody", source: sourceData, mode: mode };
+                } else {
+                    const genre = document.getElementById('genreSelect').value;
+                    if (!genre) throw new Error("Pilih genre!");
+                    
+                    const vType = document.getElementById('vocalType').value;
+                    let vSource = "";
+                    if (vType === 'upload') {
+                        const file = document.getElementById('vocalFile').files[0];
+                        if (!file) throw new Error("Pilih file vocal!");
+                        vSource = await uploadToCloudinary(file);
+                    } else if (vType === 'remover') {
+                        vSource = document.getElementById('vocalLink').value;
+                        if (!vSource) throw new Error("Masukkan link vocal!");
+                    }
+
+                    details = {
+                        type: "Request Style",
+                        genre: genre,
+                        customGenreLink: document.getElementById('customGenreLink').value || "",
+                        vocalType: vType,
+                        vocalSource: vSource,
+                        durasi: document.getElementById('duration').value
+                    };
+                }
+
+                // TRANSACTION FOR QUEUE
+                const counterRef = ref(db, 'counters/music_queue');
+                const result = await runTransaction(counterRef, (current) => (current || 0) + 1);
+                const queueNumber = result.snapshot.val();
+
+                // ALAMAT COLLECTION DIUBAH KE 'requestmusic'
+                const newOrderRef = push(ref(db, 'requestmusic'));
+                await set(newOrderRef, {
+                    userId: currentUserId,
+                    orderId: newOrderRef.key,
+                    antrian: queueNumber,
+                    kategori: "music",
+                    ...details,
+                    timestamp: serverTimestamp(),
+                    status: "pending"
+                });
+
+                document.getElementById('queueInfo').innerText = "No. Antrian: #" + queueNumber;
+                document.getElementById('orderModal').style.display = 'flex';
+            } catch (err) {
+                alert(err.message);
+                btn.disabled = false;
+                btn.innerText = "KIRIM PESANAN";
+            }
+        };
+
+        // LOAD GENRES FROM FIRESTORE
+        (async () => {
+            const snap = await getDocs(collection(fs, "products"));
+            const select = document.getElementById('genreSelect');
+            select.innerHTML = '<option value="">Pilih Style</option>';
+            snap.forEach(doc => {
+                if(doc.data().genre) select.insertAdjacentHTML('beforeend', `<option value="${doc.data().genre}">${doc.data().genre}</option>`);
+            });
+            select.insertAdjacentHTML('beforeend', '<option value="CUSTOM">CUSTOM STYLE</option>');
+        })();
+
+        document.addEventListener("click", () => {
+            document.getElementById('mainCatItems').classList.remove('select-show');
+            document.getElementById('mainCatSelected').classList.remove('select-arrow-active');
+        });
+    </script>
+</body>
+</html>

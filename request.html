@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WNFX - Pembuatan Vocal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* BASE STYLE & COLORS */
+        :root {
+            --bg-main: #14171C;
+            --bg-card: #090A0C;
+            --accent-green: #23C55E;
+            --text-main: #FFFFFF;
+            --text-muted: #636E7A;
+            --border-color: #2A2F37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            padding-bottom: 120px; 
+            position: relative;
+        }
+
+        /* ANIMASI MASUK */
+        @keyframes fadeInSlide {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-item {
+            opacity: 0;
+            animation: fadeInSlide 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+
+        /* HEADER MODIFIED */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center content */
+            padding: 25px 20px;
+            position: sticky;
+            top: 0;
+            background-color: rgba(20, 23, 28, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .home-btn {
+            position: absolute;
+            left: 20px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-name {
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: 2px;
+            color: #FFFFFF;
+        }
+
+        /* SECTION INFO */
+        .section-info { padding: 30px 20px; }
+        .section-info h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+        .section-info p { color: var(--text-muted); font-size: 14px; }
+
+        /* FORM STYLE */
+        .order-form { padding: 0 20px; }
+        .form-group { margin-bottom: 25px; position: relative; }
+        label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+
+        /* DROPDOWN */
+        .custom-select { position: relative; user-select: none; z-index: 10; }
+        .form-group:nth-child(1) .custom-select { z-index: 20; } 
+
+        .select-selected {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .select-selected:after {
+            content: "\f078";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        .select-selected.select-arrow-active:after { transform: rotate(180deg); }
+        .select-items {
+            position: absolute;
+            background-color: #0c0e12;
+            top: 105%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .select-items div { padding: 15px; cursor: pointer; font-size: 14px; }
+        .select-items div:hover { background-color: #1a1e26; color: var(--accent-green); }
+        .select-show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        input, textarea {
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .dynamic-field { display: none; animation: slideDown 0.5s ease forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* MODIFIKASI: INFO PERSETUJUAN */
+        .info-box {
+            background: rgba(35, 197, 94, 0.05);
+            border: 1px dashed var(--accent-green);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .info-box p { font-size: 12px; color: #ced4da; line-height: 1.6; margin-bottom: 10px; }
+        .agree-check { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--accent-green); }
+        .agree-check input { width: 18px; height: 18px; accent-color: var(--accent-green); cursor: pointer; }
+
+        /* ACTION AREA FIXED BOTTOM CENTER */
+        .action-area {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            padding: 25px 20px;
+            background: linear-gradient(to top, var(--bg-main) 70%, transparent);
+            z-index: 110;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-submit {
+            width: 70%;
+            background-color: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(35, 197, 94, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:disabled { background-color: #2a2f37; color: #636E7A; box-shadow: none; cursor: not-allowed; }
+        .btn-submit:active { transform: scale(0.96); }
+
+        /* CUSTOM MODAL POPUP */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-green);
+            border-radius: 25px;
+            padding: 30px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(35, 197, 94, 0.2);
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(35, 197, 94, 0.1);
+            color: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 20px;
+        }
+
+        .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+        .modal-text { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 25px; }
+        #queueInfo { color: var(--accent-green); font-weight: 800; display: block; margin-top: 10px; font-size: 16px; }
+
+        .btn-modal-close {
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <a href="index.html" class="home-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </a>
+            <div class="brand-name">WNFX</div>
+        </header>
+
+        <div class="section-info animate-item delay-1">
+            <h1>Pembuatan Vocal</h1>
+            <p>Dapatkan vocal berkualitas untuk project musik Anda.</p>
+        </div>
+
+        <main class="order-form animate-item delay-2">
+            <div class="form-group">
+                <label>Pilih Kategori Vocal</label>
+                <div class="custom-select">
+                    <div class="select-selected" id="mainCatSelected">Pilih Kategori</div>
+                    <div class="select-items" id="mainCatItems">
+                        <div data-value="request">Request Vocal</div>
+                        <div data-value="original">Vocal Original</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="subCategoryArea" class="form-group dynamic-field">
+                <label>Pilih Jenis Vocal Original</label>
+                <div class="custom-select">
+                    <div class="select-selected" id="subCatSelected">-- Pilih Jenis --</div>
+                    <div class="select-items" id="subCatItems">
+                        <div data-value="sad">Vocal Sad</div>
+                        <div data-value="jj">Vocal JJ Remix</div>
+                        <div data-value="harmor">Vocal Harmor</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="infoPersetujuan" class="info-box">
+                <p><strong>Info Penting:</strong> Proses <em>Take Vocal</em> dilakukan jam malam (setelah Isya), dan pengerjaan pesanan dilakukan setelah Dzuhur.</p>
+                <label class="agree-check">
+                    <input type="checkbox" id="checkAgree"> Saya Setuju & Mengerti
+                </label>
+            </div>
+
+            <div id="youtubeInputArea" class="dynamic-field">
+                <div class="form-group">
+                    <label>Link Video YT/Tiktok(Referensi)</label>
+                    <input type="text" id="ytLink" placeholder="Masukkan link referensi...">
+                </div>
+                <div class="form-group">
+                    <label>Lirik (Opsional)</label>
+                    <textarea id="lyricsTiruan" rows="3" placeholder="Masukkan lirik jika ada..."></textarea>
+                </div>
+            </div>
+
+            <div id="originalDetailsArea" class="dynamic-field">
+                <div class="form-group">
+                    <label>Lirik Lagu</label>
+                    <textarea id="lyrics" rows="4" placeholder="Masukkan lirik di sini..."></textarea>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="form-group" style="flex: 1;"><label>BPM</label><input type="number" id="bpm" placeholder="128"></div>
+                    <div class="form-group" style="flex: 1;"><label>CHORD</label><input type="text" id="chord" placeholder="Am G F E"></div>
+                </div>
+            </div>
+        </main>
+
+        <div class="action-area animate-item" style="animation-delay: 0.5s;">
+            <button class="btn-submit" id="btnSubmitOrder">PESAN SEKARANG</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-box">
+            <div class="modal-icon"><i class="fa-solid fa-check"></i></div>
+            <h3 class="modal-title">Order Berhasil!</h3>
+            <p class="modal-text">Terima kasih telah order, pesanan akan di tinjau oleh admin! <br><br> Untuk harga nanti bisa dilihat di riwayat pesanan jika pesanan sudah selesai <span id="queueInfo"></span></p>
+            <button class="btn-modal-close" onclick="closeModal()">OK, SIAP</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, push, set, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAaPyl0-gKKhxKjhyCmqduUF11N6C1ngZ4",
+            authDomain: "omwnfx1.firebaseapp.com",
+            databaseURL: "https://omwnfx1-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "omwnfx1",
+            storageBucket: "omwnfx1.firebasestorage.app",
+            messagingSenderId: "1063248927187",
+            appId: "1:1063248927187:web:6bd23f24517b1c2d53b726"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+
+        let currentUserId = null;
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserId = user.uid;
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        // UI Logic Setup
+        function setupCustomSelect(selectedId, itemsId, callback) {
+            const selected = document.getElementById(selectedId);
+            const items = document.getElementById(itemsId);
+            const options = items.querySelectorAll('div');
+
+            selected.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeAllSelect(selected);
+                items.classList.toggle('select-show');
+                selected.classList.toggle('select-arrow-active');
+            });
+
+            options.forEach(opt => {
+                opt.addEventListener('click', function() {
+                    selected.innerText = this.innerText;
+                    selected.setAttribute('data-value', this.getAttribute('data-value'));
+                    items.classList.remove('select-show');
+                    selected.classList.remove('select-arrow-active');
+                    if(callback) callback(this.getAttribute('data-value'));
+                });
+            });
+        }
+
+        function closeAllSelect(elmnt) {
+            const items = document.getElementsByClassName("select-items");
+            const selected = document.getElementsByClassName("select-selected");
+            for (let i = 0; i < selected.length; i++) {
+                if (elmnt != selected[i]) {
+                    selected[i].classList.remove("select-arrow-active");
+                    items[i].classList.remove("select-show");
+                }
+            }
+        }
+
+        document.addEventListener("click", closeAllSelect);
+
+        const subCatArea = document.getElementById('subCategoryArea');
+        const ytArea = document.getElementById('youtubeInputArea');
+        const detailArea = document.getElementById('originalDetailsArea');
+        const infoPersetujuan = document.getElementById('infoPersetujuan');
+        const checkAgree = document.getElementById('checkAgree');
+
+        setupCustomSelect('mainCatSelected', 'mainCatItems', function(val) {
+            ytArea.style.display = 'none';
+            subCatArea.style.display = 'none';
+            detailArea.style.display = 'none';
+            infoPersetujuan.style.display = 'none';
+            document.getElementById('subCatSelected').innerText = 'Pilih Jenis';
+
+            if (val === 'request') {
+                ytArea.style.display = 'block';
+                infoPersetujuan.style.display = 'block'; // AKTIF DI SEMUA KATEGORI
+            } else if (val === 'original') {
+                subCatArea.style.display = 'block';
+                infoPersetujuan.style.display = 'block'; // AKTIF DI SEMUA KATEGORI
+            }
+        });
+
+        setupCustomSelect('subCatSelected', 'subCatItems', function(val) {
+            if (val === 'sad' || val === 'jj' || val === 'harmor') {
+                detailArea.style.display = 'block';
+            } else {
+                detailArea.style.display = 'none';
+            }
+        });
+
+        window.closeModal = function() {
+            document.getElementById('orderModal').style.display = 'none';
+            window.location.href = "riwayat.html";
+        }
+
+        // Firebase Realtime Database Integration
+        document.getElementById('btnSubmitOrder').onclick = async function() {
+            const mainCat = document.getElementById('mainCatSelected').getAttribute('data-value');
+            const subCat = document.getElementById('subCatSelected').getAttribute('data-value');
+            
+            if (!mainCat) {
+                alert("Pilih kategori dulu, om!");
+                return;
+            }
+
+            // CHECKPOINT BERLAKU UNTUK SEMUA KATEGORI
+            if (!checkAgree.checked) {
+                alert("Centang persetujuan jam pengerjaan dulu, om!");
+                return;
+            }
+
+            if (!currentUserId) {
+                alert("Sesi berakhir, silahkan login kembali!");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const btn = document.getElementById('btnSubmitOrder');
+            btn.disabled = true;
+            btn.innerText = "MENGIRIM...";
+
+            try {
+                const counterRef = ref(db, 'counters/vocal_queue');
+                let queueNumber = 1;
+
+                const result = await runTransaction(counterRef, (currentValue) => {
+                    return (currentValue || 0) + 1;
+                });
+                queueNumber = result.snapshot.val();
+
+                // UPDATE: Alamat folder diubah ke 'orders' agar menyatu dengan pesanan lain
+                const ordersListRef = ref(db, 'orders');
+                const newOrderRef = push(ordersListRef);
+
+                const orderData = {
+                    userId: currentUserId,
+                    orderId: newOrderRef.key,
+                    antrian: queueNumber,
+                    kategori: "vocal", // Dikunci agar admin mudah memfilter
+                    tipe_vocal: mainCat, // Pilihan Request/Original dari user tetap tersimpan
+                    jenisVocal: subCat || "n/a",
+                    referensiLink: document.getElementById('ytLink').value || "",
+                    lirikTiruan: document.getElementById('lyricsTiruan').value || "",
+                    lirikOriginal: document.getElementById('lyrics').value || "",
+                    bpm: document.getElementById('bpm').value || "",
+                    chord: document.getElementById('chord').value || "",
+                    timestamp: serverTimestamp(),
+                    status: "pending"
+                };
+
+                await set(newOrderRef, orderData);
+
+                document.getElementById('queueInfo').innerText = "No. Antrian Anda: #" + queueNumber;
+                document.getElementById('orderModal').style.display = 'flex';
+
+            } catch (err) {
+                console.error(err);
+                alert('Gagal mengirim pesanan: ' + err.message);
+                btn.disabled = false;
+                btn.innerText = "PESAN SEKARANG";
+            }
+        };
+
+    </script>
+</body>
+</html>
