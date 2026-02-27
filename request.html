@@ -78,6 +78,16 @@
             align-items: center;
         }
 
+        /* TOMBOL RIWAYAT KANAN ATAS */
+        .history-btn {
+            position: absolute;
+            right: 20px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
         .brand-name {
             font-weight: 800;
             font-size: 20px;
@@ -272,6 +282,14 @@
                 </svg>
             </a>
             <div class="brand-name">WNFX</div>
+            <a href="riwayatmusic.html" class="history-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                    <path d="M3.3 7a9 9 0 1 1 0 10"></path>
+                    <polyline points="2 6 3.4 7 4.4 5.6"></polyline>
+                </svg>
+            </a>
         </header>
 
         <div class="section-info animate-item delay-1">
@@ -482,8 +500,8 @@
                 });
                 queueNumber = result.snapshot.val();
 
-                // UPDATE: Alamat folder diubah ke 'orders' agar menyatu dengan pesanan lain
-                const ordersListRef = ref(db, 'orders');
+                // MODIFIKASI: Mengganti koleksi dari 'orders' ke 'requestmusic'
+                const ordersListRef = ref(db, 'requestmusic');
                 const newOrderRef = push(ordersListRef);
 
                 const orderData = {
