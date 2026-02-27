@@ -404,7 +404,16 @@
                         if(isProcess) statusClass = 'status-process';
                         if(isRejected) statusClass = 'status-rejected';
                         
-                        const title = data.type || "Request Musik";
+                        // MODIFIKASI: Menyesuaikan judul kategori dengan awalan "request"
+                        let categoryDisplay = "Request Musik";
+                        if (data.kategori === "vocal") {
+                            categoryDisplay = "Request Vocal/Acapella";
+                        } else if (data.kategori === "music") {
+                            categoryDisplay = "Request Music";
+                        } else if (data.type) {
+                            categoryDisplay = "Request " + data.type;
+                        }
+
                         const date = data.timestamp ? new Date(data.timestamp).toLocaleDateString('id-ID', {
                             day: 'numeric', month: 'short', year: 'numeric'
                         }) : '-';
@@ -424,7 +433,7 @@
                                 <div class="order-header">
                                     <div class="order-info">
                                         <div style="display:flex; align-items:center;">
-                                            <h3>${title}</h3>
+                                            <h3>${categoryDisplay}</h3>
                                             ${isRejected ? `<span class="action-text text-reject" onclick="showRejectInfo('${data.alasan || 'Tidak ada alasan spesifik.'}')">lihat alasan</span>` : ''}
                                             ${isSuccess ? `<span class="action-text text-success" onclick="showSuccessInfo('${data.total_harga || 0}', '${data.pesan_selesai || 'Pesanan Anda telah siap.'}', '${data.orderId}')">tebus pesanan</span>` : ''}
                                         </div>
