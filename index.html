@@ -6,863 +6,8 @@
     <title>Wnfx-Mix | Next-Gen FLM Marketplace</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-black: #050505;
-            --card-bg: #111111;
-            --accent-mint: #00f3bc;
-            --text-muted: #888;
-            --border-dim: #222;
-/* Ganti di bagian :root { ... } */
---accent-gradient: linear-gradient(135deg, #e0ff99 0%, #00f3bc 100%);
---shadow-glow: 0 8px 25px rgba(0, 243, 188, 0.25); /* Bayangan dibuat lebih tipis */
+     <link rel="stylesheet" href="ACjIhYJBvtU.css">
 
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: var(--bg-black);
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 110px;
-            overflow-x: hidden;
-        }
-
-        /* --- NAVBAR (Premium Style) --- */
-        .navbar {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: rgba(5, 5, 5, 0.85);
-            backdrop-filter: blur(15px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-.brand {
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    color: #fff;
-    text-transform: uppercase;
-}
-
-.brand span {
-    color: var(--accent-mint);
-    margin-left: 2px;
-    position: relative;
-}
-
-/* Tambahan: Efek berdenyut pada logo */
-.brand svg {
-    filter: drop-shadow(0 0 5px rgba(0, 243, 188, 0.4));
-    transition: 0.3s;
-}
-
-.brand:hover svg {
-    transform: rotate(-10deg) scale(1.1);
-}
-
-        .nav-right { display: flex; gap: 20px; align-items: center; }
-        .nav-right i { font-size: 18px; cursor: pointer; color: #fff; transition: 0.3s; position: relative; }
-        .nav-right i:hover { color: var(--accent-mint); }
-        
-        /* Badge Keranjang */
-        .cart-count {
-            position: absolute; top: -8px; right: -10px;
-            background: var(--accent-mint); color: #000;
-            font-size: 10px; font-weight: 800; padding: 2px 5px;
-            border-radius: 10px; display: none;
-        }
-
-        /* --- HERO SECTION --- */
-        .header-hero {
-            width: 100%;
-            max-width: 450px;
-            padding: 40px 20px 20px;
-            text-align: center;
-        }
-        .header-hero h1 {
-            font-size: 30px;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 15px;
-            background: linear-gradient(180deg, #fff 0%, #aaa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .header-hero p {
-            color: #aaa;
-            font-size: 15px;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-
-        /* --- SEARCH BOX --- */
-        .search-wrapper {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto 20px;
-            position: relative;
-        }
-        .search-bar {
-            width: 100%;
-            background: #fff;
-            border-radius: 30px;
-            padding: 14px 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
-        .search-bar input {
-            flex: 1;
-            border: none;
-            outline: none;
-            font-size: 15px;
-            font-family: inherit;
-            color: #000;
-            font-weight: 500;
-        }
-        .search-bar input::placeholder { color: #999; }
-        .search-bar i { color: #555; font-size: 17px; }
-
-        .btn-waitlist {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 12px 35px;
-            border-radius: 40px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-        .btn-waitlist:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.1); }
-
-        /* --- BENTO GRID CATEGORY --- */
-        .section-label { 
-            width: 100%; 
-            max-width: 450px; 
-            padding: 0 20px; 
-            margin-top: 30px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-end;
-        }
-        .section-label h2 { font-size: 20px; font-weight: 700; }
-        .section-label .see-all { 
-            font-size: 12px; 
-            color: var(--accent-mint); 
-            font-weight: 600; 
-            cursor: pointer;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .section-label .see-all:hover { text-decoration: underline; opacity: 0.8; }
-        
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: 85px;
-            gap: 10px;
-            margin: 20px;
-            width: calc(100% - 40px);
-            max-width: 440px;
-        }
-        .card {
-            border-radius: 12px;
-            padding: 15px;
-            display: flex;
-            align-items: flex-end;
-            text-align: left;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-dim);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
-            z-index: 1;
-        }
-
-        .card::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(225deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-            z-index: 2;
-        }
-
-        .card h3 { 
-            font-size: 12px; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 0.8px; 
-            z-index: 3; 
-            position: relative;
-            line-height: 1.2;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .tall { grid-row: span 2; }
-        .wide { grid-column: span 2; }
-        
-        .card:hover { 
-            border-color: var(--accent-mint); 
-            transform: translateY(-5px); 
-            box-shadow: 0 10px 25px rgba(0, 243, 188, 0.25); 
-        }
-
-        .c-phonk { background: linear-gradient(to top, rgba(138, 43, 226, 0.5), transparent), url('https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=500'); background-size: cover; }
-        .c-remix { background: linear-gradient(to top, rgba(0, 243, 188, 0.4), transparent), url('https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?auto=format&fit=crop&w=500'); background-size: cover; }
-        .c-stems { background: linear-gradient(to top, rgba(255, 107, 107, 0.4), transparent), url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=500'); background-size: cover; }
-        .c-presets { background: linear-gradient(to top, rgba(72, 219, 251, 0.4), transparent), url('https://images.unsplash.com/photo-1525362081669-2b476bb628c3?auto=format&fit=crop&w=500'); background-size: cover; }
-        .c-hipdut { background: linear-gradient(to top, rgba(255, 159, 67, 0.4), transparent), url('https://images.unsplash.com/photo-1514525253344-99a655f9d197?auto=format&fit=crop&w=500'); background-size: cover; }
-        .c-popular { background: linear-gradient(to top, rgba(29, 209, 161, 0.4), transparent), url('https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=500'); background-size: cover; }
-
-
-        /* --- HORIZONTAL SCROLL --- */
-        .horizontal-scroll {
-            width: 100%;
-            display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            padding: 20px;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-        }
-        .horizontal-scroll::-webkit-scrollbar { display: none; }
-
-        /* --- ALBUM CARD (Kunci Ukuran Presisi - ANTI MELEBAR) --- */
-        .album-card {
-            flex: 0 0 220px;
-            width: 220px; /* Kunci lebar pasti */
-            max-width: 220px; /* Cegah ngelebar kalau teks panjang */
-            height: 350px; 
-            scroll-snap-align: start;
-            background: #111;
-            border-radius: 18px;
-            padding: 12px;
-            border: 1px solid #222;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* Pastikan konten yang keluar dipotong */
-        }
-        
-        .album-card:hover { border-color: var(--accent-mint); }
-        
-        .album-art-container {
-            width: 100%;
-            height: 194px;
-            background: #1a1a1a;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            position: relative;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-        
-        .album-art-container img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .album-badge {
-            position: absolute;
-            top: 8px; right: 8px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            padding: 3px 7px;
-            border-radius: 6px;
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--accent-mint);
-            z-index: 10;
-        }
-
-        /* --- AREA INFO (Wajib min-width: 0 agar Ellipsis jalan) --- */
-        .album-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-width: 0; /* JURUS RAHASIA: Supaya teks di dalamnya mau jadi titik-titik */
-            overflow: hidden;
-        }
-
-        .album-info h4 { 
-            font-size: 14px; 
-            font-weight: 700; 
-            margin-bottom: 2px; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; /* Titik-titik aktif */
-            width: 100%;
-            display: block;
-        }
-
-        .album-info p { 
-            font-size: 11px; 
-            color: #666; 
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis; /* Genre juga biar aman kalau panjang */
-            margin-bottom: 5px;
-            width: 100%;
-        }
-
-        /* --- BARIS TOMBOL PREMIUM --- */
-        .album-actions-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-        }
-        .price-tag { font-weight: 800; color: #fff; font-size: 11px; white-space: nowrap; }
-        
-        .btn-group-premium {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-premium-mini {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .btn-premium-mini:active { transform: scale(0.9); }
-
-        /* Tombol Utama (Buy/Get) */
-        .btn-premium-main {
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 800;
-            border: none;
-            cursor: pointer;
-            color: #000;
-            background: var(--accent-gradient);
-            box-shadow: var(--shadow-glow);
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-        .btn-premium-main:active { transform: scale(0.95); }
-
-        /* --- TRENDING LIST --- */
-        .track-list { width: 100%; max-width: 450px; padding: 20px; }
-        .track-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 12px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-        }
-        .track-item:hover { background: rgba(255,255,255,0.05); }
-        .play-trigger {
-            width: 40px; height: 40px; border-radius: 50%;
-            background: var(--card-bg);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; border: 1px solid var(--border-dim);
-        }
-        .track-meta { flex: 1; overflow: hidden; }
-        .track-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
-        .track-sub { font-size: 10px; color: var(--text-muted); }
-        .track-btns { display: flex; gap: 12px; color: var(--text-muted); font-size: 14px; align-items: center; }
-        .track-btns i { cursor: pointer; transition: 0.2s; }
-        .track-btns i:hover { color: #fff; }
-        .fa-heart.active { color: #ff4757 !important; }
-
-        /* --- FLOATING PLAYER --- */
-/* --- FLOATING PLAYER (FIXED ABOVE NAV) --- */
-/* --- FLOATING PLAYER (FIXED ABOVE NAV) --- */
-.floating-player {
-    position: fixed; 
-    bottom: 85px; 
-    left: 50%;
-    transform: translateX(-50%) translateY(20px); /* Geser dikit ke bawah buat persiapan animasi */
-    width: calc(100% - 30px);
-    max-width: 470px;
-    background: rgba(15, 15, 15, 0.9); 
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    padding: 12px 15px; 
-    border: 1px solid rgba(255,255,255,0.1); 
-    border-radius: 20px;
-    z-index: 9000;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    
-    /* LOGIKA SEMBUNYI */
-    display: none; /* Sembunyi total */
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Class tambahan saat muncul */
-.floating-player.active {
-    display: block; /* Atau tetap flex jika player-inner butuh */
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-
-/* Penyesuaian isi player agar lebih padat */
-.player-inner { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-}
-
-.album-art { 
-    width: 40px; 
-    height: 40px; 
-    border-radius: 10px; 
-    flex-shrink: 0;
-}
-
-        .album-art img { width: 100%; height: 100%; object-fit: cover; }
-        .btn-play-mini { width: 38px; height: 38px; background: #fff; border-radius: 50%; border: none; color: #000; cursor: pointer; }
-        .seek-bar { flex: 1; height: 4px; background: #222; border-radius: 2px; position: relative; cursor: pointer; }
-        .seek-fill { width: 0%; height: 100%; background: var(--accent-mint); border-radius: 2px; transition: width 0.1s; }
-        .seek-knob { width: 10px; height: 10px; background: #fff; border-radius: 50%; position: absolute; left: 0%; top: 50%; transform: translate(-50%, -50%); transition: left 0.1s; }
-        /* --- HILANGKAN HIGHLIGHT KLIK --- */
-        * {
-            -webkit-tap-highlight-color: transparent; /* Hilangkan kotak biru di HP */
-            outline: none; /* Hilangkan garis bantu fokus */
-        }
-
-        /* Khusus untuk tombol supaya tidak ada efek 'select' teks saat diklik cepat */
-        button, .btn-premium-mini, .play-trigger, .card, .album-card {
-            user-select: none;
-            -webkit-user-select: none;
-        }
-/* --- CHECKOUT OVERLAY --- */
-.overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    display: none; /* Sembunyi secara default */
-    justify-content: center;
-    align-items: center;
-    z-index: 3000;
-    padding: 20px;
-}
-
-.checkout-card {
-    width: 100%;
-    max-width: 400px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-dim);
-    border-radius: 24px;
-    padding: 25px;
-    position: relative;
-    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes slideUp {
-    from { transform: translateY(50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.checkout-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.checkout-item-info {
-    display: flex;
-    gap: 15px;
-    background: rgba(255,255,255,0.03);
-    padding: 15px;
-    border-radius: 16px;
-    margin-bottom: 20px;
-}
-
-.checkout-img {
-    width: 80px; height: 80px;
-    border-radius: 12px;
-    object-fit: cover;
-}
-
-.checkout-details h3 { font-size: 16px; margin-bottom: 5px; }
-.checkout-details p { font-size: 12px; color: var(--text-muted); }
-
-.payment-methods {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 25px;
-}
-
-.pay-method {
-    border: 1px solid #333;
-    padding: 10px;
-    border-radius: 12px;
-    text-align: center;
-    font-size: 12px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.pay-method:hover, .pay-method.active {
-    border-color: var(--accent-mint);
-    background: rgba(0, 243, 188, 0.1);
-}
-
-.btn-confirm-pay {
-    width: 100%;
-    padding: 15px;
-    border-radius: 30px;
-    border: none;
-    background: var(--accent-gradient);
-    font-weight: 800;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: var(--shadow-glow);
-}
-/* Label untuk jumlah checkout */
-.checkout-count-badge {
-    position: absolute;
-    top: 30px; /* Di bawah label PREMIUM */
-    right: 8px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    padding: 3px 7px;
-    border-radius: 6px;
-    font-size: 9px;
-    font-weight: 500;
-    color: #fff;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-.checkout-count-badge i {
-    color: var(--accent-mint);
-    font-size: 8px;
-}
-/* --- CART OVERLAY SPECIFIC --- */
-.cart-item-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 12px;
-    margin-bottom: 10px;
-}
-.cart-item-row img {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
-    object-fit: cover;
-}
-.cart-item-info { flex: 1; }
-.cart-item-info h5 { font-size: 13px; margin: 0; }
-.cart-item-info p { font-size: 10px; color: var(--accent-mint); margin: 0; }
-.btn-remove-item { color: #ff4757; cursor: pointer; font-size: 14px; padding: 5px; }
-/* --- BOTTOM NAVIGATION BAR (FIXED) --- */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 50%; /* Posisikan di tengah */
-    transform: translateX(-50%); /* Geser balik setengah lebar agar center */
-    width: 100%;
-    max-width: 500px; /* Sesuaikan dengan max-width website kamu */
-    background: rgba(10, 10, 10, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px); /* Dukungan Safari */
-    display: flex;
-    justify-content: space-around;
-    padding: 12px 0 25px; 
-    border-top: 1px solid rgba(255,255,255,0.1);
-    z-index: 9999; /* Angka dewa biar gak tenggelam */
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
-}
-
-/* Biar konten di atasnya gak kepotong nav bawah */
-body {
-    padding-bottom: 100px; /* Sesuaikan dengan tinggi nav */
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    color: #666;
-    text-decoration: none;
-    font-size: 10px;
-    font-weight: 500;
-    transition: 0.3s;
-    flex: 1; /* Biar area kliknya luas */
-}
-
-.nav-item.active { 
-    color: var(--accent-mint); 
-}
-
-.nav-item i { 
-    font-size: 20px; 
-}
-/* --- PRODUCER REVIEWS CSS --- */
-.review-scroll {
-    width: 100%;
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    padding: 20px;
-    scrollbar-width: none;
-}
-.review-scroll::-webkit-scrollbar { display: none; }
-
-.review-card {
-    flex: 0 0 280px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-dim);
-    border-radius: 20px;
-    padding: 20px;
-    transition: 0.3s;
-}
-
-.review-card:hover {
-    border-color: var(--accent-mint);
-    transform: translateY(-5px);
-}
-
-.stars {
-    color: #ffb800;
-    font-size: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    gap: 3px;
-}
-
-.rev-user {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.rev-user img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.rev-user h4 {
-    font-weight: 700;
-    color: #fff;
-}
-
-/* --- CONTEXT MENU DROPDOWN --- */
-.custom-menu {
-    position: fixed;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 8px 0;
-    min-width: 180px;
-    z-index: 10001;
-    display: none; /* Sembunyi default */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    animation: fadeInScale 0.2s ease-out;
-}
-
-@keyframes fadeInScale {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-.menu-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    color: #eee;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.menu-item:hover {
-    background: rgba(255,255,255,0.05);
-}
-
-.menu-item i {
-    width: 16px;
-    color: #888;
-    font-size: 16px;
-}
-
-/* Garis pemisah antar menu jika dibutuhkan */
-.menu-divider {
-    height: 1px;
-    background: #222;
-    margin: 4px 0;
-}
-/* --- HERO GRID BACKGROUND --- */
-.header-hero {
-    width: 100%;
-    max-width: 450px;
-    padding: 60px 20px 40px; /* Padding ditingkatkan agar lebih lega */
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Pola Kotak-kotak (Grid) */
-.header-hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 30px 30px; /* Ukuran kotak */
-    background-position: center center;
-    mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
-    -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
-    z-index: -1;
-}
-
-/* Tambahan Efek Cahaya di belakang teks */
-.header-hero::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
-    background: var(--accent-mint);
-    filter: blur(120px);
-    opacity: 0.15;
-    z-index: -1;
-}
-/* --- SERVICES SECTION STYLE --- */
-.services-wrapper {
-    width: 100%;
-    max-width: 450px;
-    padding: 0 20px;
-    margin-bottom: 30px;
-}
-
-.services-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px 10px;
-    background: rgba(255, 255, 255, 0.02); /* Box halus transparan */
-    padding: 20px 10px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    margin-top: 15px;
-    backdrop-filter: blur(5px);
-}
-
-.service-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.service-icon {
-    width: 52px;
-    height: 52px;
-    background: #151515;
-    border: 1px solid #252525;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    color: #ccc;
-    transition: 0.3s;
-}
-
-.service-item span {
-    font-size: 9px;
-    font-weight: 700;
-    color: #666;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-}
-
-/* Hover Effect */
-.service-item:hover .service-icon {
-    border-color: var(--accent-mint);
-    color: var(--accent-mint);
-    transform: translateY(-5px) rotate(5deg);
-    box-shadow: 0 8px 20px rgba(0, 243, 188, 0.15);
-}
-
-.service-item:hover span {
-    color: #fff;
-}
-/* Menghilangkan dekorasi link pada service item */
-.service-item {
-    text-decoration: none; /* Hapus garis bawah */
-    color: inherit;       /* Ikuti warna aslinya */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Pastikan span di dalamnya tidak berubah jadi biru */
-.service-item span {
-    text-decoration: none;
-}
-
-    </style>
 </head>
 <body>
 
@@ -919,7 +64,7 @@ body {
         border: 1px solid rgba(0, 243, 188, 0.2);
         text-transform: uppercase;">
         <i class="fa-solid fa-microchip" style="font-size: 12px;"></i>
-        Powered by WNFX AI 2.0
+        Powered by WNFX
     </div>
     
     <h1>Premium FL Studio Mobile Marketplace</h1>
@@ -945,7 +90,7 @@ body {
 
 
     <div class="section-label">
-        <h2>Premium Collections</h2>
+        <h2>FLM Products</h2>
         <a href="produk.html" class="see-all">See All</a>
     </div>
 
@@ -1013,106 +158,92 @@ body {
 </div>
 
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, updateDoc, doc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, updateDoc, doc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAaPyl0-gKKhxKjhyCmqduUF11N6C1ngZ4",
-            authDomain: "omwnfx1.firebaseapp.com",
-            databaseURL: "https://omwnfx1-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "omwnfx1",
-            storageBucket: "omwnfx1.firebasestorage.app",
-            messagingSenderId: "1063248927187",
-            appId: "1:1063248927187:web:6bd23f24517b1c2d53b726",
-            measurementId: "G-N4BK425V1X"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyAaPyl0-gKKhxKjhyCmqduUF11N6C1ngZ4",
+        authDomain: "omwnfx1.firebaseapp.com",
+        databaseURL: "https://omwnfx1-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "omwnfx1",
+        storageBucket: "omwnfx1.firebasestorage.app",
+        messagingSenderId: "1063248927187",
+        appId: "1:1063248927187:web:6bd23f24517b1c2d53b726",
+        measurementId: "G-N4BK425V1X"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const rtdb = getDatabase(app);
 
-        // --- GLOBAL VARIABLES & UTILS ---
-        window.cartItems = []; 
-        function formatIDR(val) {
-            return "IDR " + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
+    // Mendaftarkan variabel penting ke window agar script di luar module bisa akses
+    window.auth = auth;
+    window.db = db;
+    window.rtdb = rtdb;
 
-        // --- CORE FUNCTIONS (FIREBASE INTERACTION) ---
-        
-        // Fungsi saat tombol konfirmasi checkout diklik
-        // --- CORE FUNCTIONS (FIREBASE INTERACTION) ---
-        
-        async function processCheckout(productId) {
-            try {
-                // 1. Ambil referensi dokumen produk
-                const productRef = doc(db, "products", productId);
-                
-                // 2. Kita perlu ambil datanya dulu untuk cek harga dan link download
-                // Kita ambil dari cache local atau fetch singkat
-                const allDocs = await getDocs(collection(db, "products"));
-                let targetData = null;
-                allDocs.forEach((d) => { if(d.id === productId) targetData = d.data(); });
+    window.cartItems = [];
+    function formatIDR(val) {
+        return "IDR " + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
 
-                if (!targetData) {
-                    alert("Produk tidak ditemukan!");
-                    return;
-                }
+    async function processCheckout(productId) {
+        try {
+            const productRef = doc(db, "products", productId);
+            const allDocs = await getDocs(collection(db, "products"));
+            let targetData = null;
+            allDocs.forEach((d) => { if (d.id === productId) targetData = d.data(); });
 
-                const price = parseInt(targetData.harga) || 0;
-                const dLink = targetData.downloadlink;
-
-                // 3. Logika untuk produk GRATIS (FREE)
-                if (price === 0) {
-                    // Update jumlah checkout di database (statistik)
-                    await updateDoc(productRef, {
-                        checkout: increment(1)
-                    });
-
-                    if (dLink && dLink.includes("drive.google.com") || dLink.startsWith("http")) {
-                        alert("Success! Mengalihkan ke Google Drive...");
-                        window.closeCheckout();
-                        
-                        // Eksekusi Download/Buka Link
-                        window.open(dLink, '_blank');
-                        
-                        loadData(); // Refresh tampilan untuk update angka api/checkout
-                    } else {
-                        alert("Link download tidak valid atau belum tersedia.");
-                    }
-                } 
-                // 4. Logika untuk produk BERBAYAR
-                else {
-                    alert("Produk ini berbayar. Silahkan hubungi admin untuk proses aktivasi lisensi.");
-                    // Di sini nanti bisa diarahkan ke WhatsApp atau payment gateway
-                }
-
-            } catch (e) {
-                console.error("Error processing checkout: ", e);
-                alert("Terjadi kesalahan saat memproses checkout.");
+            if (!targetData) {
+                alert("Produk tidak ditemukan!");
+                return;
             }
+
+            const price = parseInt(targetData.harga) || 0;
+            const dLink = targetData.downloadlink;
+
+            if (price === 0) {
+                await updateDoc(productRef, { checkout: increment(1) });
+                if (dLink && (dLink.includes("drive.google.com") || dLink.startsWith("http"))) {
+                    alert("Success! Mengalihkan ke Google Drive...");
+                    window.closeCheckout();
+                    window.open(dLink, '_blank');
+                    loadData();
+                } else {
+                    alert("Link download tidak valid atau belum tersedia.");
+                }
+            } else {
+                alert("Produk ini berbayar. Silahkan hubungi admin untuk proses aktivasi lisensi.");
+            }
+        } catch (e) {
+            console.error("Error processing checkout: ", e);
+            alert("Terjadi kesalahan saat memproses checkout.");
         }
-        window.processCheckout = processCheckout;
+    }
+    window.processCheckout = processCheckout;
 
+    async function loadData() {
+        try {
+            const querySnapshot = await getDocs(collection(db, "products"));
+            let allProducts = [];
+            querySnapshot.forEach((doc) => {
+                allProducts.push({ id: doc.id, ...doc.data() });
+            });
 
-        async function loadData() {
-            try {
-                const querySnapshot = await getDocs(collection(db, "products"));
-                let allProducts = [];
-                querySnapshot.forEach((doc) => {
-                    allProducts.push({ id: doc.id, ...doc.data() });
-                });
+            allProducts.sort(() => Math.random() - 0.5);
 
-                allProducts.sort(() => Math.random() - 0.5);
-
-                // Render Premium
-                const premiumContainer = document.getElementById('premiumContainer');
+            const premiumContainer = document.getElementById('premiumContainer');
+            if (premiumContainer) {
                 premiumContainer.innerHTML = '';
                 allProducts.slice(0, 5).forEach(prod => {
                     const price = parseInt(prod.harga) || 0;
                     const displayPrice = price === 0 ? "FREE" : formatIDR(price);
                     const btnLabel = price === 0 ? "GET" : "BUY";
                     const checkoutCount = prod.checkout || 0;
-                    
+
                     premiumContainer.innerHTML += `
                         <div class="album-card" data-audio="${prod.audio}" data-img="${prod.avatar}" data-judul="${prod.judul}">
                             <div class="album-art-container">
@@ -1130,18 +261,18 @@ body {
                                     <div class="btn-group-premium">
                                         <div class="btn-premium-mini play-trigger-premium"><i class="fa-solid fa-play"></i></div>
                                         <div class="btn-premium-mini" onclick="addToCart('${prod.judul}', '${prod.avatar}', '${displayPrice}')"><i class="fa-solid fa-cart-plus"></i></div>
-                                        <button class="btn-premium-main" onclick="openCheckout('${prod.id}', '${prod.judul}', '${prod.avatar}', '${displayPrice}', '${prod.genre}')">
+                                        <button class="btn-premium-main" onclick="openCheckout('${prod.id}', '${prod.judul}', '${prod.avatar}', '${displayPrice}', '${prod.genre}', \`${prod.deskripsi || 'No description provided for this project.'}\`)">
                                             ${btnLabel}
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 });
+            }
 
-                // Render Trending
-                const trendingContainer = document.getElementById('mainTrackList');
+            const trendingContainer = document.getElementById('mainTrackList');
+            if (trendingContainer) {
                 trendingContainer.innerHTML = '';
                 allProducts.slice(0, 3).forEach(prod => {
                     const price = parseInt(prod.harga) || 0;
@@ -1157,293 +288,353 @@ body {
                             <div class="track-btns">
                                 <i class="fa-regular fa-heart" onclick="toggleLike(this)"></i>
                                 <i class="fa-solid fa-bag-shopping" onclick="addToCart('${prod.judul}', '${prod.avatar}', '${displayPrice}')"></i>
-<i class="fa-solid fa-ellipsis-vertical" onclick="showOptions('${prod.id}', '${prod.judul}', '${prod.avatar}', event)"></i>
-
+                                <i class="fa-solid fa-ellipsis-vertical" onclick="showOptions('${prod.id}', '${prod.judul}', '${prod.avatar}', event)"></i>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 });
+            }
+            if (typeof initAudioPlayers === "function") initAudioPlayers();
+        } catch (e) { console.error("Error:", e); }
+    }
+    window.loadData = loadData;
 
-                initAudioPlayers();
-
-            } catch (e) { console.error("Error:", e); }
+    // FUNGSI SAVE ORDER (Ditempatkan di dalam module agar kenal 'auth' dan 'rtdb')
+    async function saveOrderToRTB(productId, productTitle, price) {
+        const user = window.auth.currentUser;
+        if (!user) {
+            alert("Waduh, login dulu Bang biar datanya masuk ke akun kamu!");
+            window.location.href = 'login.html';
+            return;
         }
-
-        loadData();
-    </script>
-
-    <script>
-        // --- AUDIO & PLAYER LOGIC ---
-        let isPlaying = false;
-        const playerTrackName = document.getElementById('current-track');
-        const mainPlayBtn = document.getElementById('mainPlayBtn');
-        const seekFill = document.getElementById('seekFill');
-        const seekKnob = document.getElementById('seekKnob');
-        const playerTime = document.getElementById('player-time');
-        const playerArt = document.getElementById('playerArt');
-        let audioPlayer = new Audio();
-
-function initAudioPlayers() {
-    const allTriggers = [...document.querySelectorAll('.play-trigger'), ...document.querySelectorAll('.play-trigger-premium')];
-    const floatingPlayer = document.querySelector('.floating-player'); // Ambil elemen player
-
-    allTriggers.forEach(btn => {
-        btn.onclick = function() {
-            const parent = this.closest('.track-item') || this.closest('.album-card');
-            const trackName = parent.querySelector('.track-name')?.innerText || parent.getAttribute('data-judul');
-            const audioSrc = parent.getAttribute('data-audio');
-            const imgSrc = parent.getAttribute('data-img');
-            
-            // LOGIKA MUNCULKAN PLAYER
-            if (floatingPlayer.style.display !== 'block') {
-                floatingPlayer.style.display = 'block';
-                setTimeout(() => floatingPlayer.classList.add('active'), 10);
-            }
-
-            if(audioPlayer.src === audioSrc) {
-                audioPlayer.paused ? audioPlayer.play() : audioPlayer.pause();
-                isPlaying = !audioPlayer.paused;
-            } else {
-                audioPlayer.src = audioSrc;
-                playerTrackName.innerText = trackName;
-                playerArt.innerHTML = `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">`;
-                audioPlayer.play();
-                isPlaying = true;
-            }
-            updateUIStates();
-        };
-    });
-}
-
-
-        function updateUIStates() {
-            mainPlayBtn.innerHTML = isPlaying ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
-            document.querySelectorAll('.play-trigger i, .play-trigger-premium i').forEach(icon => {
-                const parent = icon.closest('.track-item') || icon.closest('.album-card');
-                if (isPlaying && audioPlayer.src === parent.getAttribute('data-audio')) {
-                    icon.className = 'fa-solid fa-pause';
-                } else {
-                    icon.className = 'fa-solid fa-play';
-                }
+        try {
+            const orderRef = ref(window.rtdb, 'pesanan/' + user.uid);
+            const newOrderRef = push(orderRef);
+            await set(newOrderRef, {
+                orderId: newOrderRef.key,
+                productId: productId,
+                productTitle: productTitle,
+                price: price,
+                status: "Pending",
+                timestamp: Date.now(),
+                userEmail: user.email
             });
+            console.log("Data pesanan berhasil dicatat!");
+        } catch (error) {
+            console.error("Gagal catat pesanan:", error);
         }
+    }
+    window.saveOrderToRTB = saveOrderToRTB;
 
+    loadData();
+</script>
+
+<script>
+    // --- AUDIO & PLAYER LOGIC ---
+    let isPlaying = false;
+    const playerTrackName = document.getElementById('current-track');
+    const mainPlayBtn = document.getElementById('mainPlayBtn');
+    const seekFill = document.getElementById('seekFill');
+    const seekKnob = document.getElementById('seekKnob');
+    const playerTime = document.getElementById('player-time');
+    const playerArt = document.getElementById('playerArt');
+    let audioPlayer = new Audio();
+
+    function initAudioPlayers() {
+        const allTriggers = [...document.querySelectorAll('.play-trigger'), ...document.querySelectorAll('.play-trigger-premium')];
+        const floatingPlayer = document.querySelector('.floating-player');
+
+        allTriggers.forEach(btn => {
+            btn.onclick = function() {
+                const parent = this.closest('.track-item') || this.closest('.album-card');
+                const trackName = parent.querySelector('.track-name')?.innerText || parent.getAttribute('data-judul');
+                const audioSrc = parent.getAttribute('data-audio');
+                const imgSrc = parent.getAttribute('data-img');
+
+                if (floatingPlayer && floatingPlayer.style.display !== 'block') {
+                    floatingPlayer.style.display = 'block';
+                    setTimeout(() => floatingPlayer.classList.add('active'), 10);
+                }
+
+                if (audioPlayer.src === audioSrc) {
+                    audioPlayer.paused ? audioPlayer.play() : audioPlayer.pause();
+                    isPlaying = !audioPlayer.paused;
+                } else {
+                    audioPlayer.src = audioSrc;
+                    if (playerTrackName) playerTrackName.innerText = trackName;
+                    if (playerArt) playerArt.innerHTML = `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">`;
+                    audioPlayer.play();
+                    isPlaying = true;
+                }
+                updateUIStates();
+            };
+        });
+    }
+
+    function updateUIStates() {
+        if (mainPlayBtn) mainPlayBtn.innerHTML = isPlaying ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
+        document.querySelectorAll('.play-trigger i, .play-trigger-premium i').forEach(icon => {
+            const parent = icon.closest('.track-item') || icon.closest('.album-card');
+            if (isPlaying && audioPlayer.src === parent.getAttribute('data-audio')) {
+                icon.className = 'fa-solid fa-pause';
+            } else {
+                icon.className = 'fa-solid fa-play';
+            }
+        });
+    }
+
+    if (mainPlayBtn) {
         mainPlayBtn.addEventListener('click', () => {
-            if(!audioPlayer.src) return;
+            if (!audioPlayer.src) return;
             audioPlayer.paused ? audioPlayer.play() : audioPlayer.pause();
             isPlaying = !audioPlayer.paused;
             updateUIStates();
         });
+    }
 
-        audioPlayer.ontimeupdate = function() {
-            if (audioPlayer.duration) {
-                const pct = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-                seekFill.style.width = pct + '%';
-                seekKnob.style.left = pct + '%';
-                playerTime.innerText = `${formatTime(audioPlayer.currentTime)} / ${formatTime(audioPlayer.duration)}`;
-            }
-        };
-
-        function formatTime(seconds) {
-            const min = Math.floor(seconds / 60);
-            const sec = Math.floor(seconds % 60);
-            return `${min}:${sec < 10 ? '0' + sec : sec}`;
+    audioPlayer.ontimeupdate = function() {
+        if (audioPlayer.duration) {
+            const pct = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            if (seekFill) seekFill.style.width = pct + '%';
+            if (seekKnob) seekKnob.style.left = pct + '%';
+            if (playerTime) playerTime.innerText = `${formatTime(audioPlayer.currentTime)} / ${formatTime(audioPlayer.duration)}`;
         }
+    };
 
-        document.getElementById('seekBar').addEventListener('click', function(e) {
-            if(!audioPlayer.src) return;
+    function formatTime(seconds) {
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min}:${sec < 10 ? '0' + sec : sec}`;
+    }
+
+    const seekBar = document.getElementById('seekBar');
+    if (seekBar) {
+        seekBar.addEventListener('click', function(e) {
+            if (!audioPlayer.src) return;
             audioPlayer.currentTime = ((e.clientX - this.getBoundingClientRect().left) / this.offsetWidth) * audioPlayer.duration;
         });
+    }
 
-        audioPlayer.onended = () => { isPlaying = false; updateUIStates(); };
+    audioPlayer.onended = () => { isPlaying = false; updateUIStates(); };
 
-        // --- CART SYSTEM ---
-        window.addToCart = function(judul, avatar, harga) {
-            const exists = window.cartItems.find(item => item.judul === judul);
-            if(exists) return alert("Already in cart!");
-
-            window.cartItems.push({ judul, avatar, harga });
-            updateCartBadge();
-            
-            // Animasi sedikit pada badge agar user sadar sudah masuk
-            const badge = document.getElementById('cartBadge');
+    // --- CART SYSTEM ---
+    window.addToCart = function(judul, avatar, harga) {
+        const exists = window.cartItems.find(item => item.judul === judul);
+        if (exists) return alert("Already in cart!");
+        window.cartItems.push({ judul, avatar, harga });
+        updateCartBadge();
+        const badge = document.getElementById('cartBadge');
+        if (badge) {
             badge.style.transform = 'scale(1.5)';
             setTimeout(() => badge.style.transform = 'scale(1)', 200);
         }
+    }
 
-        function updateCartBadge() {
-            const badge = document.getElementById('cartBadge');
+    function updateCartBadge() {
+        const badge = document.getElementById('cartBadge');
+        if (badge) {
             badge.innerText = window.cartItems.length;
             badge.style.display = window.cartItems.length > 0 ? 'block' : 'none';
         }
+    }
 
-        window.openCart = function() {
-            const list = document.getElementById('cartItemsList');
-            const emptyMsg = document.getElementById('cartEmptyMsg');
-            const btnCo = document.getElementById('btnCheckoutAll');
-            
-            list.innerHTML = '';
-            
-            if (window.cartItems.length === 0) {
-                emptyMsg.style.display = 'block';
-                btnCo.style.display = 'none';
-            } else {
-                emptyMsg.style.display = 'none';
-                btnCo.style.display = 'block';
-                
-                window.cartItems.forEach((item, index) => {
-                    list.innerHTML += `
-                        <div class="cart-item-row">
-                            <img src="${item.avatar}">
-                            <div class="cart-item-info">
-                                <h5>${item.judul}</h5>
-                                <p>${item.harga}</p>
-                            </div>
-                            <i class="fa-solid fa-trash-can btn-remove-item" onclick="removeFromCart(${index})"></i>
+    window.openCart = function() {
+        const list = document.getElementById('cartItemsList');
+        const emptyMsg = document.getElementById('cartEmptyMsg');
+        const btnCo = document.getElementById('btnCheckoutAll');
+        if (!list) return;
+        list.innerHTML = '';
+        if (window.cartItems.length === 0) {
+            if (emptyMsg) emptyMsg.style.display = 'block';
+            if (btnCo) btnCo.style.display = 'none';
+        } else {
+            if (emptyMsg) emptyMsg.style.display = 'none';
+            if (btnCo) btnCo.style.display = 'block';
+            window.cartItems.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="cart-item-row">
+                        <img src="${item.avatar}">
+                        <div class="cart-item-info">
+                            <h5>${item.judul}</h5>
+                            <p>${item.harga}</p>
                         </div>
-                    `;
-                });
+                        <i class="fa-solid fa-trash-can btn-remove-item" onclick="removeFromCart(${index})"></i>
+                    </div>`;
+            });
+        }
+        document.getElementById('cartOverlay').style.display = 'flex';
+    }
+
+    window.closeCart = function() { document.getElementById('cartOverlay').style.display = 'none'; }
+
+    window.removeFromCart = function(index) {
+        window.cartItems.splice(index, 1);
+        updateCartBadge();
+        openCart();
+    }
+
+    window.onclick = function(event) {
+        const coOverlay = document.getElementById('checkoutOverlay');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const menu = document.getElementById('dropdownMenu');
+        if (event.target == coOverlay) closeCheckout();
+        if (event.target == cartOverlay) closeCart();
+        if (menu) menu.style.display = 'none';
+    };
+
+    // --- OVERLAY & CHECKOUT LOGIC ---
+    window.togglePayButton = function() {
+        const checkbox = document.getElementById('checkRead');
+        const btn = document.getElementById('btnConfirm');
+        if (!checkbox || !btn) return;
+        if (checkbox.checked) {
+            btn.disabled = false;
+            btn.style.opacity = "1";
+            btn.style.cursor = "pointer";
+            btn.style.transform = "scale(1)";
+        } else {
+            btn.disabled = true;
+            btn.style.opacity = "0.4";
+            btn.style.cursor = "not-allowed";
+            btn.style.transform = "scale(0.98)";
+        }
+    };
+
+    window.openCheckout = function(id, title, img, price, genre, desc = "") {
+        try {
+            const checkbox = document.getElementById('checkRead');
+            if (checkbox) {
+                checkbox.checked = false;
+                window.togglePayButton();
             }
-            document.getElementById('cartOverlay').style.display = 'flex';
-        }
-
-        window.closeCart = function() {
-            document.getElementById('cartOverlay').style.display = 'none';
-        }
-
-        window.removeFromCart = function(index) {
-            window.cartItems.splice(index, 1);
-            updateCartBadge();
-            openCart(); // Refresh tampilan list
-        }
-
-        // Update fungsi window.onclick untuk menutup cart overlay juga
-        window.onclick = function(event) {
-            const coOverlay = document.getElementById('checkoutOverlay');
-            const cartOverlay = document.getElementById('cartOverlay');
-            if (event.target == coOverlay) closeCheckout();
-            if (event.target == cartOverlay) closeCart();
-        };
-
-        // --- OVERLAY LOGIC ---
-        window.openCheckout = function(id, title, img, price, genre) {
             document.getElementById('coTitle').innerText = title;
             document.getElementById('coImg').src = img;
             document.getElementById('coPrice').innerText = price;
             document.getElementById('coGenre').innerText = (genre || 'Remix') + ' • FLM Project';
+            const descEl = document.getElementById('coDesc');
+            if (descEl) descEl.innerHTML = desc || "No description available.";
             
+            const payArea = document.getElementById('paymentArea');
             const btn = document.getElementById('btnConfirm');
-            btn.innerText = price === "FREE" ? "GET NOW (FREE)" : "CONFIRM & PAY";
-            
-            // Set action konfirmasi untuk update Firestore
-            btn.onclick = () => window.processCheckout(id);
+            const isFree = (price.toUpperCase() === "FREE" || price === "0" || price.includes("IDR 0"));
 
+            if (isFree) {
+                if (payArea) payArea.style.display = 'none';
+                btn.innerText = "GET NOW (FREE)";
+                btn.style.background = "var(--accent-mint)";
+                btn.onclick = () => window.processCheckout(id);
+            } else {
+                if (payArea) payArea.style.display = 'block';
+                btn.innerText = "KIRIM BUKTI TRANSFER";
+                btn.style.background = "#25D366";
+                btn.onclick = async () => {
+                    await window.saveOrderToRTB(id, title, price);
+                    const waNumber = "6283129555763";
+                    const message = window.encodeURIComponent(`Halo RizFX, saya sudah transfer untuk project:\n\n📌 Produk: ${title}\n💰 Harga: ${price}\n🆔 ID: ${id}\n\nMohon dicek ya Bang!`);
+                    window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
+                };
+            }
             document.getElementById('checkoutOverlay').style.display = 'flex';
-        };
+        } catch (err) { console.error(err); }
+    };
 
-        window.closeCheckout = function() {
-            document.getElementById('checkoutOverlay').style.display = 'none';
-        };
+    window.closeCheckout = function() { document.getElementById('checkoutOverlay').style.display = 'none'; };
+    window.toggleLike = function(el) { el.classList.toggle('fa-regular'); el.classList.toggle('fa-solid'); el.classList.toggle('active'); };
 
-        window.toggleLike = function(el) {
-            el.classList.toggle('fa-regular'); el.classList.toggle('fa-solid'); el.classList.toggle('active');
+    window.showOptions = function(id, title, img, event) {
+        if (event) event.stopPropagation();
+        const menu = document.getElementById('dropdownMenu');
+        const parent = event.target.closest('.track-item') || event.target.closest('.album-card');
+        const audioUrl = parent ? parent.getAttribute('data-audio') : '';
+        if (!menu) return;
+        menu.style.display = 'block';
+        let posX = event.clientX - 150;
+        let posY = event.clientY + 10;
+        if (posX + 180 > window.innerWidth) posX = window.innerWidth - 190;
+        if (posY + 150 > window.innerHeight) posY = event.clientY - 160;
+        menu.style.left = posX + 'px';
+        menu.style.top = posY + 'px';
+        menu.dataset.currentTitle = title;
+        menu.dataset.currentAudio = audioUrl;
+    };
+
+    window.handleMenuAction = function(action) {
+        const menu = document.getElementById('dropdownMenu');
+        const title = menu.dataset.currentTitle;
+        let audioUrl = menu.dataset.currentAudio;
+        if (action === 'Download Preview') {
+            if (!audioUrl || audioUrl === "undefined") return alert("Preview tidak tersedia.");
+            if (audioUrl.includes('cloudinary.com')) audioUrl = audioUrl.replace('/upload/', '/upload/fl_attachment/');
+            const link = document.createElement('a');
+            link.href = audioUrl;
+            link.setAttribute('download', `${title}.mp3`);
+            link.target = "_blank";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else if (action === 'Copy Link') {
+            navigator.clipboard.writeText(window.location.href).then(() => alert("Link disalin!"));
         }
+    };
+</script>
 
-window.showOptions = function(id, title, img, event) {
-    if (event) event.stopPropagation();
-
-    const menu = document.getElementById('dropdownMenu');
-    
-    // AMBIL DATA AUDIO: Cari elemen track-item terdekat untuk mengambil link audionya
-    const parent = event.target.closest('.track-item') || event.target.closest('.album-card');
-    const audioUrl = parent ? parent.getAttribute('data-audio') : '';
-    
-    menu.style.display = 'block';
-
-    // Logika posisi
-    let posX = event.clientX - 150; 
-    let posY = event.clientY + 10;
-
-    // Proteksi layar
-    if (posX + 180 > window.innerWidth) posX = window.innerWidth - 190;
-    if (posY + 150 > window.innerHeight) posY = event.clientY - 160;
-
-    menu.style.left = posX + 'px';
-    menu.style.top = posY + 'px';
-
-    // Simpan ke dataset agar bisa dibaca oleh handleMenuAction
-    menu.dataset.currentTitle = title;
-    menu.dataset.currentAudio = audioUrl; 
-};
-
-// Tutup menu jika klik di mana saja
-window.addEventListener('click', function() {
-    const menu = document.getElementById('dropdownMenu');
-    if(menu) menu.style.display = 'none';
-});
-
-function handleMenuAction(action) {
-    const menu = document.getElementById('dropdownMenu');
-    const title = menu.dataset.currentTitle;
-    let audioUrl = menu.dataset.currentAudio;
-
-    if (action === 'Download Preview') {
-        if (!audioUrl || audioUrl === "undefined") {
-            alert("Maaf, file preview tidak tersedia untuk produk ini.");
-            return;
-        }
-
-        // TRIK CLOUDINARY: Tambahkan fl_attachment agar otomatis download, bukan cuma play di tab baru
-        if (audioUrl.includes('cloudinary.com')) {
-            audioUrl = audioUrl.replace('/upload/', '/upload/fl_attachment/');
-        }
-
-        // Eksekusi Download
-        const link = document.createElement('a');
-        link.href = audioUrl;
-        link.setAttribute('download', `${title}.mp3`);
-        link.target = "_blank";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-    } else if (action === 'Copy Link') {
-        const shareUrl = window.location.href; // Atau ganti dengan link produk spesifik jika ada
-        navigator.clipboard.writeText(shareUrl).then(() => {
-            alert("Link berhasil disalin ke clipboard!");
-        });
-    } else {
-        alert(`${action}: ${title}`);
-    }
-}
-
-
-    </script>
-    <div class="overlay" id="checkoutOverlay">
-    <div class="checkout-card">
-        <div class="checkout-header">
-            <h2 style="font-size: 18px;">Checkout</h2>
-            <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeCheckout()"></i>
+<div class="overlay" id="checkoutOverlay">
+    <div class="checkout-card" style="padding: 22px; max-width: 360px; border-radius: 28px; background: #0f0f0f; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 4px; height: 14px; background: var(--accent-mint); border-radius: 10px;"></div>
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #fff; text-transform: uppercase;">Checkout Detail</span>
+            </div>
+            <i class="fa-solid fa-circle-xmark" style="cursor:pointer; font-size: 22px; color: #222; transition: 0.3s;" onclick="closeCheckout()"></i>
         </div>
 
-        <div class="checkout-item-info">
-            <img src="" id="coImg" class="checkout-img">
-            <div class="checkout-details">
-                <h3 id="coTitle">Track Name</h3>
-                <p id="coGenre">Genre • FLM Project</p>
-                <div id="coPrice" style="color: var(--accent-mint); font-weight: 700; margin-top: 5px;">IDR 0</div>
+        <div style="display: flex; gap: 16px; margin-bottom: 20px; align-items: center;">
+            <img src="" id="coImg" style="width: 85px; height: 85px; border-radius: 18px; object-fit: cover; box-shadow: 0 8px 15px rgba(0,0,0,0.3);">
+            <div style="flex: 1; min-width: 0;">
+                <h3 id="coTitle" style="font-size: 16px; font-weight: 800; color: #fff; margin: 0 0 4px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3;">Track Name</h3>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <span id="coGenre" style="font-size: 10px; color: #666; font-weight: 600;">Genre • FLM</span>
+                </div>
+                <div id="coPrice" style="color: var(--accent-mint); font-weight: 900; font-size: 16px; margin-top: 6px;">IDR 0</div>
             </div>
         </div>
 
-        <p style="font-size: 12px; margin-bottom: 10px; color: #aaa;">Select Payment Method:</p>
-        <div class="payment-methods">
-            <div class="pay-method active"><i class="fa-solid fa-wallet"></i><br>Dana/QRIS</div>
-            <div class="pay-method"><i class="fa-solid fa-building-columns"></i><br>Bank Transfer</div>
+        <div id="coDesc" style="font-size: 11px; color: #999; background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 15px; margin-bottom: 12px; line-height: 1.5; max-height: 60px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.02);">
+            No description.
         </div>
 
-        <button class="btn-confirm-pay" id="btnConfirm">CONFIRM & PAY</button>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding: 0 5px;">
+            <input type="checkbox" id="checkRead" style="width: 16px; height: 16px; accent-color: var(--accent-mint); cursor: pointer;" onchange="togglePayButton()">
+            <label for="checkRead" style="font-size: 11px; color: #666; cursor: pointer; user-select: none;">Saya sudah membaca & setuju dengan catatan di atas.</label>
+        </div>
+
+        <div id="paymentArea" style="display: none; background: #141414; border: 1px solid #1d1d1d; padding: 12px 16px; border-radius: 18px; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <svg width="20" height="20" viewBox="0 0 145 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M72.3 135.2C112.2 135.2 144.6 104.9 144.6 67.6C144.6 30.3 112.2 0 72.3 0C32.4 0 0 30.3 0 67.6C0 104.9 32.4 135.2 72.3 135.2Z" fill="#118EEA"/>
+                        <path d="M72.3 103.1C92 103.1 108 87.2 108 67.6C108 48 92 32.1 72.3 32.1C52.6 32.1 36.6 48 36.6 67.6C36.6 87.2 52.6 103.1 72.3 103.1Z" fill="white"/>
+                    </svg>
+                    <span id="danaNumber" style="font-size: 13px; font-weight: 800; color: #fff; letter-spacing: 1px;">0831-2955-5763</span>
+                </div>
+                <span style="font-size: 9px; color: #444; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">DANA</span>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <button class="btn-confirm-pay" id="btnConfirm" style="height: 48px; border-radius: 16px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border: none; box-shadow: 0 4px 15px rgba(0, 243, 188, 0.2); opacity: 0.4; cursor: not-allowed;" disabled>
+                CONFIRM & GET
+            </button>
+            
+            <a href="presets.html" style="text-decoration: none;">
+                <div style="font-size: 10px; color: #444; text-align: center; font-weight: 700; transition: 0.3s;">
+                    <i class="fa-solid fa-wave-square"></i> NEED PRESETS ONLY? <span style="text-decoration: underline;">CLICK HERE</span>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
+
 <div class="overlay" id="cartOverlay">
     <div class="checkout-card">
         <div class="checkout-header">
@@ -1525,10 +716,9 @@ function handleMenuAction(action) {
         <i class="fa-solid fa-layer-group"></i>
         <span>Library</span>
     </a>
-    
-    <a href="javascript:void(0)" class="nav-item" onclick="openCart()">
+        <a href="transaksi.html" class="nav-item">
         <i class="fa-solid fa-cart-shopping"></i>
-        <span>Orders</span>
+        <span>Order</span>
     </a>
     
     <a href="profile.html" class="nav-item">
