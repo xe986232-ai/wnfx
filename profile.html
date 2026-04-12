@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wnfx-Mix | Producer Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-black: #050505;
+            --card-bg: #111111;
+            --accent-mint: #00f3bc;
+            --text-muted: #888;
+            --border-dim: #222;
+            --accent-gradient: linear-gradient(135deg, #e0ff99 0%, #00f3bc 100%);
+            --shadow-glow: 0 8px 25px rgba(0, 243, 188, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-black);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 110px;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- AUTH SECTION --- */
+        #authSection {
+            width: 100%; max-width: 450px; padding: 40px 20px;
+            display: none; flex-direction: column; align-items: center;
+        }
+        .auth-card {
+            background: var(--card-bg); border: 1px solid var(--border-dim);
+            padding: 30px; border-radius: 24px; width: 100%; box-shadow: var(--shadow-glow);
+        }
+        .auth-card h2 { font-size: 26px; font-weight: 800; margin-bottom: 10px; color: #fff; }
+        .auth-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.5px; }
+        .form-group input {
+            width: 100%; padding: 14px 16px; background: #0a0a0a; border: 1px solid var(--border-dim);
+            border-radius: 12px; color: #fff; font-family: inherit; outline: none; transition: 0.3s;
+        }
+        .form-group input:focus { border-color: var(--accent-mint); }
+
+        .btn-auth {
+            width: 100%; padding: 16px; border-radius: 12px; border: none;
+            background: var(--accent-gradient); color: #000; font-weight: 800;
+            font-size: 14px; cursor: pointer; margin-top: 10px; transition: 0.3s;
+        }
+        .auth-footer { text-align: center; margin-top: 25px; font-size: 13px; color: var(--text-muted); }
+        .auth-footer span { color: var(--accent-mint); cursor: pointer; font-weight: 700; }
+
+        /* --- PROFILE SECTION (Tetap Sesuai Kode Asli) --- */
+        #profileSection { width: 100%; display: none; flex-direction: column; align-items: center; }
+
+        .navbar {
+            width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .brand { font-size: 20px; font-weight: 800; color: #fff; text-transform: uppercase; }
+        .brand span { color: var(--accent-mint); }
+
+        .profile-header { width: 100%; max-width: 450px; padding: 40px 20px; text-align: center; position: relative; }
+        .avatar-wrapper { width: 110px; height: 110px; margin: 0 auto 15px; position: relative; padding: 5px; background: var(--accent-gradient); border-radius: 50%; box-shadow: var(--shadow-glow); }
+        .avatar-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg-black); }
+        .badge-pro { position: absolute; bottom: 5px; right: 5px; background: #fff; color: #000; font-size: 10px; font-weight: 900; padding: 4px 8px; border-radius: 20px; text-transform: uppercase; }
+
+        .profile-info h1 { font-size: 24px; font-weight: 800; margin-bottom: 5px; }
+        .profile-info p { color: var(--text-muted); font-size: 13px; }
+
+        .stats-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: calc(100% - 40px); max-width: 440px; margin: 20px 0; }
+        .stat-card { background: var(--card-bg); border: 1px solid var(--border-dim); padding: 15px; border-radius: 16px; text-align: center; }
+        .stat-card h3 { font-size: 18px; color: var(--accent-mint); }
+        .stat-card p { font-size: 10px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-top: 4px; }
+
+        .menu-section { width: 100%; max-width: 450px; padding: 0 20px; margin-top: 10px; }
+        .section-title { font-size: 14px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin: 15px 0 10px; letter-spacing: 1px; }
+        .menu-list { background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-dim); overflow: hidden; }
+        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border-dim); cursor: pointer; transition: 0.3s; }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item-left { display: flex; align-items: center; gap: 15px; }
+        .menu-item-left i { font-size: 18px; color: var(--text-muted); width: 24px; }
+        .menu-item-left span { font-size: 15px; font-weight: 500; }
+        .menu-item i.fa-chevron-right { font-size: 12px; color: #333; }
+
+        .btn-logout { width: calc(100% - 40px); max-width: 440px; margin-top: 30px; padding: 16px; border-radius: 16px; border: 1px solid #300; background: rgba(255, 71, 87, 0.05); color: #ff4757; font-weight: 700; font-size: 14px; cursor: pointer; }
+
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 12px 0 25px; border-top: 1px solid rgba(255,255,255,0.1); z-index: 9999; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #666; text-decoration: none; font-size: 10px; flex: 1; }
+        .nav-item.active { color: var(--accent-mint); }
+        .nav-item i { font-size: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="authSection">
+        <div class="auth-card">
+            <h2 id="authTitle">Sign In</h2>
+            <p id="authSubtitle">Selamat datang kembali di Wnfx-Mix.</p>
+
+            <div id="signUpGroup" style="display: none;">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="regUser" placeholder="Nama produser kamu">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="authEmail" placeholder="email@example.com">
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="authPass" placeholder="Masukkan password">
+            </div>
+
+            <button class="btn-auth" id="btnAction" onclick="handleAuth()">MASUK SEKARANG</button>
+
+            <div class="auth-footer">
+                <p id="toggleText">Belum punya akun? <span onclick="toggleMode()">Daftar</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="profileSection">
+        <nav class="navbar">
+            <div class="brand">Wnfx<span>Mix</span></div>
+            <div class="nav-right"><i class="fa-solid fa-gear"></i></div>
+        </nav>
+
+        <header class="profile-header">
+            <div class="avatar-wrapper">
+                <img id="userAvatar" src="" alt="Avatar">
+                <div class="badge-pro">PRO</div>
+            </div>
+            <div class="profile-info">
+                <h1 id="displayName">Producer</h1>
+                <p>Producer & Audio Engineer</p>
+            </div>
+        </header>
+
+        <div class="stats-container">
+            <div class="stat-card"><h3>12</h3><p>Orders</p></div>
+            <div class="stat-card"><h3>4</h3><p>Wishlist</p></div>
+            <div class="stat-card"><h3>PRO</h3><p>Level</p></div>
+        </div>
+
+<div class="menu-section">
+    <p class="section-title">Purchases</p>
+    <div class="menu-list">
+        <div class="menu-item" onclick="location.href='transaksi.html'">
+            <div class="menu-item-left">
+                <i class="fa-solid fa-box-open"></i>
+                <span>My Projects & Stems</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+        
+        <div class="menu-item" onclick="location.href='transaksi.html'">
+            <div class="menu-item-left">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>Transaction History</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+    </div>
+
+    <p class="section-title">Producer Tools</p>
+    <div class="menu-list">
+        <div class="menu-item" onclick="location.href='sell.html'">
+            <div class="menu-item-left">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Sell Your FLM Project</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="menu-item" onclick="location.href='voucher.html'">
+            <div class="menu-item-left">
+                <i class="fa-solid fa-ticket"></i>
+                <span>Redeem Voucher</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+    </div>
+
+    <p class="section-title">Support</p>
+    <div class="menu-list">
+        <div class="menu-item" onclick="location.href='help.html'">
+            <div class="menu-item-left">
+                <i class="fa-solid fa-circle-question"></i>
+                <span>Help Center</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="menu-item" onclick="window.open('https://wa.me/6283129555763', '_blank')">
+            <div class="menu-item-left">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Contact Admin</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+    </div>
+</div>
+
+        <button class="btn-logout" onclick="handleLogout()">LOGOUT ACCOUNT</button>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fa-solid fa-house-chimney"></i><span>Home</span></a>
+        <a href="produk.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Library</span></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-cart-shopping"></i><span>Orders</span></a>
+        <a href="profile.html" class="nav-item active"><i class="fa-solid fa-circle-user"></i><span>Account</span></a>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAaPyl0-gKKhxKjhyCmqduUF11N6C1ngZ4",
+            authDomain: "omwnfx1.firebaseapp.com",
+            databaseURL: "https://omwnfx1-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "omwnfx1",
+            storageBucket: "omwnfx1.firebasestorage.app",
+            messagingSenderId: "1063248927187",
+            appId: "1:1063248927187:web:6bd23f24517b1c2d53b726",
+            measurementId: "G-N4BK425V1X"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let isSignIn = true;
+
+        // Monitor Auth State
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                loadUserData(user.uid);
+            } else {
+                document.getElementById('authSection').style.display = 'flex';
+                document.getElementById('profileSection').style.display = 'none';
+            }
+        });
+
+        async function loadUserData(uid) {
+            const userDoc = await db.collection('allusers').doc(uid).get();
+            if (userDoc.exists) {
+                const data = userDoc.data();
+                document.getElementById('displayName').innerText = data.username;
+                document.getElementById('userAvatar').src = data.avatar;
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('profileSection').style.display = 'flex';
+            }
+        }
+
+        function toggleMode() {
+            isSignIn = !isSignIn;
+            document.getElementById('authTitle').innerText = isSignIn ? "Sign In" : "Sign Up";
+            document.getElementById('authSubtitle').innerText = isSignIn ? "Selamat datang kembali di Wnfx-Mix." : "Buat akun produser kamu sekarang.";
+            document.getElementById('btnAction').innerText = isSignIn ? "MASUK SEKARANG" : "DAFTAR AKUN";
+            document.getElementById('signUpGroup').style.display = isSignIn ? "none" : "block";
+            document.getElementById('toggleText').innerHTML = isSignIn ? 
+                `Belum punya akun? <span onclick="toggleMode()">Daftar</span>` : 
+                `Sudah punya akun? <span onclick="toggleMode()">Sign In</span>`;
+        }
+
+        async function handleAuth() {
+            const email = document.getElementById('authEmail').value;
+            const pass = document.getElementById('authPass').value;
+
+            if(!email || !pass) return alert("Isi semua field!");
+
+            try {
+                if (isSignIn) {
+                    await auth.signInWithEmailAndPassword(email, pass);
+                } else {
+                    const user = document.getElementById('regUser').value;
+                    if(!user) return alert("Username wajib diisi!");
+
+                    const res = await auth.createUserWithEmailAndPassword(email, pass);
+                    
+                    // Generate Random Color Avatar dengan Inisial
+                    const randomColor = Math.floor(Math.random()*16777215).toString(16);
+                    const avatarUrl = `https://ui-avatars.com/api/?name=${user}&background=${randomColor}&color=fff&size=128&bold=true`;
+
+                    await db.collection('allusers').doc(res.user.uid).set({
+                        uid: res.user.uid,
+                        username: user,
+                        email: email,
+                        avatar: avatarUrl,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        function handleLogout() {
+            if(confirm("Keluar dari akun?")) auth.signOut();
+        }
+    </script>
+</body>
+</html>

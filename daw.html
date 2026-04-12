@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAW Center | FL Studio Mobile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-black: #050505;
+            --card-bg: #111111;
+            --accent-mint: #00f3bc;
+            --text-muted: #888;
+            --border-dim: #222;
+            --accent-gradient: linear-gradient(135deg, #e0ff99 0%, #00f3bc 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-black);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 110px;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            width: 100%; max-width: 480px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .back-btn { font-size: 18px; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+
+        /* --- HERO --- */
+        .daw-hero {
+            width: 100%; max-width: 450px;
+            padding: 40px 20px; text-align: center;
+            background: radial-gradient(circle at top, rgba(0, 243, 188, 0.1) 0%, transparent 70%);
+        }
+        .daw-hero i { font-size: 50px; color: var(--accent-mint); margin-bottom: 15px; }
+        .daw-hero h1 { font-size: 28px; margin-bottom: 10px; }
+        .daw-hero p { color: var(--text-muted); font-size: 14px; }
+
+        /* --- VERSION LIST --- */
+        .version-container { width: 100%; max-width: 450px; padding: 0 20px; }
+        .version-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-dim);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .version-card:hover { border-color: var(--accent-mint); transform: translateY(-3px); }
+        .v-info h3 { font-size: 16px; margin-bottom: 4px; }
+        .v-info span { font-size: 11px; background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 5px; color: var(--accent-mint); }
+        
+        .btn-download {
+            background: var(--accent-gradient);
+            color: #000;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* --- INFO BOX --- */
+        .info-box {
+            width: calc(100% - 40px); max-width: 410px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 15px; padding: 15px;
+            margin-top: 20px; border: 1px dashed #333;
+        }
+        .info-box h4 { font-size: 14px; color: var(--accent-mint); margin-bottom: 8px; }
+        .info-box ul { list-style: none; }
+        .info-box li { font-size: 12px; color: #888; margin-bottom: 5px; display: flex; gap: 8px; }
+        .info-box li i { color: var(--accent-mint); margin-top: 3px; }
+
+        /* --- BOTTOM NAV --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 500px;
+            background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px);
+            display: flex; justify-content: space-around; padding: 12px 0 25px;
+            border-top: 1px solid rgba(255,255,255,0.1); z-index: 9999;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #666; text-decoration: none; font-size: 10px; flex: 1; }
+        .nav-item.active { color: var(--accent-mint); }
+        .nav-item i { font-size: 20px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> DAW Center
+        </a>
+        <div class="nav-right">
+            <i class="fa-solid fa-circle-info" onclick="alert('Make sure you have enough storage!')"></i>
+        </div>
+    </nav>
+
+    <header class="daw-hero">
+        <i class="fa-solid fa-computer"></i>
+        <h1>Digital Audio Workstation</h1>
+        <p>Unduh versi FL Studio Mobile terbaru untuk menunjang kreativitas produksimu.</p>
+    </header>
+
+    <div class="version-container">
+        <div class="version-card">
+            <div class="v-info">
+                <h3>FLM v4.6.14 (Latest)</h3>
+                <span>Stable Build • 240 MB</span>
+            </div>
+            <button class="btn-download" onclick="window.open('https://your-link.com', '_blank')">DOWNLOAD</button>
+        </div>
+
+        <div class="version-card">
+            <div class="v-info">
+                <h3>FLM v4.2.5 (Old Version)</h3>
+                <span>Lightweight • 180 MB</span>
+            </div>
+            <button class="btn-download" onclick="window.open('https://your-link.com', '_blank')">DOWNLOAD</button>
+        </div>
+
+        <div class="version-card" style="border-style: dashed; border-color: #444;">
+            <div class="v-info">
+                <h3>FLM Theme Mod</h3>
+                <span style="color: #c471ed;">UI Redesign • 250 MB</span>
+            </div>
+            <button class="btn-download" style="background: linear-gradient(135deg, #c471ed, #f64f59); color: #fff;">GET MOD</button>
+        </div>
+
+        <div class="info-box">
+            <h4><i class="fa-solid fa-lightbulb"></i> Installation Tips:</h4>
+            <ul>
+                <li><i class="fa-solid fa-check"></i> Backup folder <b>My Songs</b> sebelum update.</li>
+                <li><i class="fa-solid fa-check"></i> Gunakan MT Manager untuk edit data OBB.</li>
+                <li><i class="fa-solid fa-check"></i> Minimum RAM 2GB untuk performa lancar.</li>
+            </ul>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house-chimney"></i>
+            <span>Home</span>
+        </a>
+        <a href="produk.html" class="nav-item">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Library</span>
+        </a>
+        <a href="javascript:void(0)" class="nav-item active">
+            <i class="fa-solid fa-computer"></i>
+            <span>DAW</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Account</span>
+        </a>
+    </nav>
+
+</body>
+</html>
