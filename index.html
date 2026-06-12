@@ -1193,7 +1193,7 @@ body {
                     <img id="remixCardPinkImg" src="" class="h-[60%] w-[60%] rounded-full object-cover">
                     <span id="remixCardPinkTitle" class="line-clamp-1 font-bold capitalize text-[14px]">Lo-fi Jazz</span>
                     <div class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-transparent rounded-lg">
-                        <button class="text-white play-trigger">▶</button>
+                        <button class="text-white play-trigger"><i class="fa-solid fa-play"></i></button>
                     </div>
                 </div>
 
@@ -1204,7 +1204,7 @@ body {
                     <img id="remixCardGreenImg" src="" class="h-[60%] w-[60%] rounded-full object-cover">
                     <span id="remixCardGreenTitle" class="line-clamp-1 font-bold capitalize text-[14px]">Lo-fi Jazz</span>
                     <div class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-transparent rounded-lg">
-                        <button class="text-black play-trigger">▶</button>
+                        <button class="text-black play-trigger"><i class="fa-solid fa-play"></i></button>
                     </div>
                 </div>
 
@@ -1493,12 +1493,15 @@ async function saveOrderToRTB(productId, productTitle, price) {
 
     function updateUIStates() {
         if (mainPlayBtn) mainPlayBtn.innerHTML = isPlaying ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
-        document.querySelectorAll('.play-trigger i, .play-trigger-premium i').forEach(icon => {
-            const parent = icon.closest('.track-item') || icon.closest('.album-card') || icon.closest('.remix-card');
-            if (parent && isPlaying && audioPlayer.src === parent.getAttribute('data-audio')) {
-                icon.className = 'fa-solid fa-pause';
-            } else {
-                icon.className = 'fa-solid fa-play';
+        document.querySelectorAll('.play-trigger, .play-trigger i, .play-trigger-premium i').forEach(el => {
+            const button = el.tagName === 'BUTTON' ? el : el.closest('button');
+            const icon = el.tagName === 'I' ? el : (button ? button.querySelector('i') : null);
+            const parent = el.closest('.track-item') || el.closest('.album-card') || el.closest('.remix-card');
+            const isCurrent = parent && audioPlayer.src === parent.getAttribute('data-audio') && isPlaying;
+            if (icon) {
+                icon.className = isCurrent ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+            } else if (button) {
+                button.textContent = isCurrent ? '❚❚' : '▶';
             }
         });
     }
