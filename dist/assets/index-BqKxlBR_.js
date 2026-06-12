@@ -1,0 +1,36 @@
+import{initializeApp as e}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";import{collection as t,doc as n,getDocs as r,getFirestore as i,increment as a,updateDoc as o}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";import{getDatabase as s,push as c,ref as l,set as u}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";(function(){let e=document.createElement(`link`).relList;if(e&&e.supports&&e.supports(`modulepreload`))return;for(let e of document.querySelectorAll(`link[rel="modulepreload"]`))n(e);new MutationObserver(e=>{for(let t of e)if(t.type===`childList`)for(let e of t.addedNodes)e.tagName===`LINK`&&e.rel===`modulepreload`&&n(e)}).observe(document,{childList:!0,subtree:!0});function t(e){let t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin===`use-credentials`?t.credentials=`include`:e.crossOrigin===`anonymous`?t.credentials=`omit`:t.credentials=`same-origin`,t}function n(e){if(e.ep)return;e.ep=!0;let n=t(e);fetch(e.href,n)}})();var d=e({apiKey:`AIzaSyAaPyl0-gKKhxKjhyCmqduUF11N6C1ngZ4`,authDomain:`omwnfx1.firebaseapp.com`,databaseURL:`https://omwnfx1-default-rtdb.asia-southeast1.firebasedatabase.app`,projectId:`omwnfx1`,storageBucket:`omwnfx1.firebasestorage.app`,messagingSenderId:`1063248927187`,appId:`1:1063248927187:web:6bd23f24517b1c2d53b726`,measurementId:`G-N4BK425V1X`}),f=i(d),p=s(d);window.db=f,window.rtdb=p,window.cartItems=[];function m(e){return`IDR `+e.toString().replace(/\B(?=(\d{3})+(?!\d))/g,`.`)}async function h(e){try{let i=n(f,`products`,e),s=await r(t(f,`products`)),c=null;if(s.forEach(t=>{t.id===e&&(c=t.data())}),!c){alert(`Produk tidak ditemukan!`);return}let l=parseInt(c.harga)||0,u=c.downloadlink;l===0?(await o(i,{checkout:a(1)}),u&&(u.includes(`drive.google.com`)||u.startsWith(`http`))?(alert(`Success! Mengalihkan ke Google Drive...`),window.closeCheckout(),window.open(u,`_blank`)):alert(`Link download tidak valid atau belum tersedia.`)):alert(`Produk ini berbayar. Silahkan hubungi admin untuk proses aktivasi lisensi.`)}catch(e){console.error(`Error processing checkout: `,e),alert(`Terjadi kesalahan saat memproses checkout.`)}}window.processCheckout=h;async function g(){try{let e=await r(t(f,`products`)),n=[];e.forEach(e=>{n.push({id:e.id,...e.data()})}),n.sort(()=>Math.random()-.5),window.allProductsCache=n;let i=n.find(e=>e.audio&&e.avatar)||n[0];i&&_(i);let a=document.getElementById(`premiumContainer`);a&&(a.innerHTML=``,n.slice(0,5).forEach(e=>{let t=parseInt(e.harga)||0,n=t===0?`FREE`:m(t),r=t===0?`GET`:`BUY`,i=e.checkout||0;a.innerHTML+=`
+                        <div class="album-card" data-audio="${e.audio}" data-img="${e.avatar}" data-judul="${e.judul}">
+                            <div class="album-art-container">
+                                <div class="album-badge">PREMIUM</div>
+                                <div class="checkout-count-badge">
+                                    <i class="fa-solid fa-fire-flame-curved"></i> ${i} checkouts
+                                </div>
+                                <img src="${e.avatar||`https://via.placeholder.com/300`}" alt="${e.judul}" loading="lazy">
+                            </div>
+                            <div class="album-info">
+                                <h4>${e.judul}</h4>
+                                <p>${e.genre||`Uncategorized`}</p>
+                                <div class="album-actions-row">
+                                    <span class="price-tag" style="${t===0?`color: var(--accent-mint);`:``}">${n}</span>
+                                    <div class="btn-group-premium">
+                                        <div class="btn-premium-mini play-trigger-premium"><i class="fa-solid fa-play"></i></div>
+                                        <div class="btn-premium-mini" onclick="addToCart('${e.judul}', '${e.avatar}', '${n}')"><i class="fa-solid fa-cart-plus"></i></div>
+                                        <button class="btn-premium-main" onclick="openCheckout('${e.id}', '${e.judul}', '${e.avatar}', '${n}', '${e.genre}', \`${e.deskripsi||`No description provided for this project.`}\`)">
+                                            ${r}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`}));let o=document.getElementById(`mainTrackList`);o&&(o.innerHTML=``,n.slice(0,3).forEach(e=>{let t=parseInt(e.harga)||0,n=t===0?`FREE`:m(t);o.innerHTML+=`
+                        <div class="track-item" data-audio="${e.audio}" data-img="${e.avatar}">
+                            <div class="play-trigger"><i class="fa-solid fa-play"></i></div>
+                            <div class="track-meta">
+                                <div class="track-name">${e.judul}</div>
+                                <div class="track-sub">0:30 • wnfx • <span style="color:var(--accent-mint)">${e.genre}</span></div>
+                            </div>
+                            <div class="track-btns">
+                                <i class="fa-regular fa-heart" onclick="toggleLike(this)"></i>
+                                <i class="fa-solid fa-bag-shopping" onclick="addToCart('${e.judul}', '${e.avatar}', '${n}')"></i>
+                                <i class="fa-solid fa-ellipsis-vertical" onclick="showOptions('${e.id}', '${e.judul}', '${e.avatar}', event)"></i>
+                            </div>
+                        </div>`})),typeof initAudioPlayers==`function`&&initAudioPlayers()}catch(e){console.error(`Error:`,e)}}window.loadData=g;function _(e){let t=e.judul||`Remix Track`,n=e.avatar||`https://via.placeholder.com/300`,r=e.audio||``,i=e.deskripsi||e.genre||`Feeling of “Lo-fi jazz,” consider a blend of smooth, mellow rhythms with warm, soft piano chords and delicate saxophone riffs.`,a=document.getElementById(`remixArtistImage`),o=document.getElementById(`remixPackImage`),s=document.getElementById(`remixCardPinkImg`),c=document.getElementById(`remixCardGreenImg`),l=document.getElementById(`remixTitle`),u=document.getElementById(`remixDescription`),d=document.getElementById(`remixCardPinkTitle`),f=document.getElementById(`remixCardGreenTitle`),p=document.getElementById(`remixCardPink`),m=document.getElementById(`remixCardGreen`);a&&(a.src=n,a.alt=t),o&&(o.src=n),s&&(s.src=n),c&&(c.src=n),l&&(l.textContent=t),u&&(u.textContent=i),d&&(d.textContent=t),f&&(f.textContent=t),p&&(p.setAttribute(`data-audio`,r),p.setAttribute(`data-img`,n)),m&&(m.setAttribute(`data-audio`,r),m.setAttribute(`data-img`,n))}window.renderRemixCard=_;async function v(e,t,n){localStorage.getItem(`guestUID`)||localStorage.setItem(`guestUID`,`user_`+Math.random().toString(36).substr(2,9));let r=localStorage.getItem(`guestUID`);try{let i=c(l(window.rtdb,`pesanan/`+r));await u(i,{orderId:i.key,productId:e,productTitle:t,price:n,status:`Pending`,timestamp:Date.now(),userEmail:r}),console.log(`Data pesanan berhasil dicatat!`)}catch(e){console.error(`Gagal catat pesanan:`,e)}}window.saveOrderToRTB=v,g();
