@@ -539,7 +539,89 @@
     border-color: var(--accent-mint);
     background: rgba(0, 243, 188, 0.1);
 }
+/* --- PAYMENT METHODS V2 --- */
+.payment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #141414;
+    border: 1.5px solid #1d1d1d;
+    padding: 10px 14px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.payment-option:hover {
+    border-color: rgba(0,243,188,0.4);
+}
+
+.payment-option.selected {
+    border-color: var(--accent-mint);
+    background: rgba(0, 243, 188, 0.06);
+    box-shadow: 0 0 0 1px rgba(0,243,188,0.15);
+}
+
+.pm-logo {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #fff;
+}
+.pm-logo img, .pm-logo svg { width: 100%; height: 100%; object-fit: contain; }
+
+.pm-info { flex: 1; min-width: 0; }
+.pm-info .pm-name {
+    font-size: 12px; font-weight: 800; color: #fff;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+.pm-info .pm-number {
+    font-size: 13px; font-weight: 700; color: #ccc;
+    letter-spacing: 0.5px;
+    font-family: 'Inter', monospace;
+}
+
+.pm-radio {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: 0.25s;
+}
+.pm-radio::after {
+    content: "";
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--accent-mint);
+    transform: scale(0);
+    transition: 0.2s;
+}
+.payment-option.selected .pm-radio {
+    border-color: var(--accent-mint);
+}
+.payment-option.selected .pm-radio::after {
+    transform: scale(1);
+}
+
+.pm-copy {
+    color: #555;
+    font-size: 13px;
+    padding: 6px;
+    transition: 0.2s;
+    flex-shrink: 0;
+}
+.pm-copy:hover { color: var(--accent-mint); }
+.pm-copy.copied { color: var(--accent-mint); }
 .btn-confirm-pay {
     width: 100%;
     padding: 15px;
@@ -1514,7 +1596,29 @@ window.filterBy = function(category) {
             btn.style.transform = "scale(0.98)";
         }
     };
+window.selectPayment = function(el) {
+    document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+    el.classList.add('selected');
+    window.selectedPaymentMethod = el.dataset.method;
+    window.selectedPaymentNumber = el.dataset.number;
+};
 
+window.copyPmNumber = function(event, number) {
+    event.stopPropagation();
+    navigator.clipboard.writeText(number).then(() => {
+        const icon = event.target;
+        icon.classList.remove('fa-regular', 'fa-copy');
+        icon.classList.add('fa-solid', 'fa-check', 'copied');
+        setTimeout(() => {
+            icon.classList.remove('fa-solid', 'fa-check', 'copied');
+            icon.classList.add('fa-regular', 'fa-copy');
+        }, 1200);
+    });
+};
+
+// Set default selected saat halaman load
+window.selectedPaymentMethod = "DANA";
+window.selectedPaymentNumber = "087761132695";
     window.openCheckout = function(id, title, img, price, genre, desc = "") {
         try {
             const checkbox = document.getElementById('checkRead');
@@ -1554,7 +1658,7 @@ previewAudio.src = prodData?.audio || '';
                 btn.onclick = async () => {
                     await window.saveOrderToRTB(id, title, price);
                     const waNumber = "6285894847455";
-const message = window.encodeURIComponent(`Halo XgusXG! 👋\n\nSaya udah transfer buat project ini:\n\n*Produk:* _${title}_\n*Harga:* _${price}_\n*ID:* ${id}\n\n*Mohon segera dicek ya!* 🙏`);
+const message = window.encodeURIComponent(`Halo XgusXG! 👋\n\nSaya udah transfer buat project ini:\n\n*Produk:* _${title}_\n*Harga:* _${price}_\n*ID:* ${id}\n*Via:* _${window.selectedPaymentMethod} (${window.selectedPaymentNumber})_\n\n*Mohon segera dicek ya!* 🙏`);
                     window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
                 };
             }
@@ -1678,18 +1782,53 @@ previewAudio.onended = function() {
             <label for="checkRead" style="font-size: 11px; color: #666; cursor: pointer; user-select: none;">Saya sudah membaca & setuju dengan catatan di atas.</label>
         </div>
 
-        <div id="paymentArea" style="display: none; background: #141414; border: 1px solid #1d1d1d; padding: 12px 16px; border-radius: 18px; margin-bottom: 18px;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <svg width="20" height="20" viewBox="0 0 145 136" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M72.3 135.2C112.2 135.2 144.6 104.9 144.6 67.6C144.6 30.3 112.2 0 72.3 0C32.4 0 0 30.3 0 67.6C0 104.9 32.4 135.2 72.3 135.2Z" fill="#118EEA"/>
-                        <path d="M72.3 103.1C92 103.1 108 87.2 108 67.6C108 48 92 32.1 72.3 32.1C52.6 32.1 36.6 48 36.6 67.6C36.6 87.2 52.6 103.1 72.3 103.1Z" fill="white"/>
-                    </svg>
-                    <span id="danaNumber" style="font-size: 13px; font-weight: 800; color: #fff; letter-spacing: 1px;">0831-2955-5763</span>
-                </div>
-                <span style="font-size: 9px; color: #444; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">DANA</span>
-            </div>
-        </div>
+<div id="paymentArea" style="display: none; margin-bottom: 18px;">
+    <div style="font-size: 10px; color: #555; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; padding: 0 2px;">
+        Pilih Metode Pembayaran
+    </div>
+    <div class="payment-list">
+
+<!-- DANA -->
+<div class="payment-option selected" data-method="DANA" data-number="087761132695" onclick="selectPayment(this)">
+    <div class="pm-logo" style="background:#fff;">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_dana_blue.svg" alt="DANA" style="width:70%; height:70%; object-fit:contain;">
+    </div>
+    <div class="pm-info">
+        <div class="pm-name">DANA</div>
+        <div class="pm-number">087761132695</div>
+    </div>
+    <i class="fa-regular fa-copy pm-copy" onclick="copyPmNumber(event, '087761132695')"></i>
+    <div class="pm-radio"></div>
+</div>
+
+<!-- GOPAY -->
+<div class="payment-option" data-method="GoPay" data-number="085894847455" onclick="selectPayment(this)">
+    <div class="pm-logo" style="background:#fff;">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Gopay.svg" alt="GoPay" style="width:70%; height:70%; object-fit:contain;">
+    </div>
+    <div class="pm-info">
+        <div class="pm-name">GoPay</div>
+        <div class="pm-number">085894847455</div>
+    </div>
+    <i class="fa-regular fa-copy pm-copy" onclick="copyPmNumber(event, '085894847455')"></i>
+    <div class="pm-radio"></div>
+</div>
+
+<!-- BANK JAGO -->
+<div class="payment-option" data-method="Bank Jago" data-number="104636561220" onclick="selectPayment(this)">
+    <div class="pm-logo" style="background:#fff;">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo-jago.svg" alt="Bank Jago" style="width:80%; height:80%; object-fit:contain;">
+    </div>
+    <div class="pm-info">
+        <div class="pm-name">Bank Jago</div>
+        <div class="pm-number">104636561220</div>
+    </div>
+    <i class="fa-regular fa-copy pm-copy" onclick="copyPmNumber(event, '104636561220')"></i>
+    <div class="pm-radio"></div>
+</div>
+
+    </div>
+</div>
 
         <div style="display: flex; flex-direction: column; gap: 12px;">
             <button class="btn-confirm-pay" id="btnConfirm" style="height: 48px; border-radius: 16px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border: none; box-shadow: 0 4px 15px rgba(0, 243, 188, 0.2); opacity: 0.4; cursor: not-allowed;" disabled>
