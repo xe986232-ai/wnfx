@@ -155,7 +155,6 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
@@ -170,16 +169,20 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const rtdb = getDatabase(app);
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                fetchOrders(user.uid);
-            } else {
-                window.location.href = 'profile.html'; 
-            }
-        });
+       const userData = localStorage.getItem('userData');
+if (!userData) {
+    document.getElementById('orderContainer').innerHTML = `
+        <div class="empty-state">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <p>Kamu belum terdaftar.</p>
+            <a href="index.html" style="color:var(--accent-mint); font-size:12px; text-decoration:none;">Kembali ke Home →</a>
+        </div>`;
+} else {
+    const user = JSON.parse(userData);
+    fetchOrders(user.uid);
+}
 
         function fetchOrders(uid) {
             const container = document.getElementById('orderContainer');
