@@ -26,7 +26,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-bottom: 150px; /* Ditambah agar tidak tertutup player */
+            padding-bottom: 150px;
             overflow-x: hidden;
         }
 
@@ -84,7 +84,6 @@
         .lib-thumb img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .lib-card:hover .lib-thumb img { transform: scale(1.1); }
         
-        /* TOMBOL PLAY DI ATAS THUMBNAIL */
         .play-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.3); display: flex; align-items: center;
@@ -112,7 +111,7 @@
             border-radius: 8px; font-size: 10px; font-weight: 800; cursor: pointer;
         }
 
-        /* --- FLOATING PLAYER (Sama dengan Index) --- */
+        /* --- FLOATING PLAYER --- */
         .floating-player {
             position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%);
             width: calc(100% - 30px); max-width: 470px;
@@ -141,14 +140,96 @@
         .nav-item.active { color: var(--accent-mint); }
         .nav-item i { font-size: 20px; }
 
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 10001; padding: 20px; }
-        .checkout-card { width: 100%; max-width: 400px; background: var(--card-bg); border: 1px solid var(--border-dim); border-radius: 24px; padding: 25px; animation: slideUp 0.3s ease; }
+        /* --- OVERLAY --- */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 10001; padding: 20px;
+        }
+
+        /* --- CHECKOUT CARD (sama persis index.html) --- */
+        .checkout-card {
+            width: 100%; max-width: 400px;
+            padding: 22px; max-width: 360px; border-radius: 28px;
+            background: #0f0f0f; border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* CO Image Wrapper */
+        .co-img-wrapper {
+            position: relative; width: 85px; height: 85px;
+            flex-shrink: 0; cursor: pointer;
+        }
+        .co-img-wrapper img {
+            width: 100%; height: 100%; border-radius: 18px;
+            object-fit: cover; box-shadow: 0 8px 15px rgba(0,0,0,0.3); transition: 0.3s;
+        }
+        .co-play-btn {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 34px; height: 34px;
+            background: rgba(0,0,0,0.55); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; color: #fff; opacity: 1; pointer-events: none; transition: background 0.3s;
+        }
+        .co-img-wrapper.playing img { filter: brightness(0.5); }
+        .co-img-wrapper.playing .co-play-btn { background: var(--accent-mint) !important; color: #000 !important; }
+        .co-img-wrapper.playing { box-shadow: 0 0 0 3px var(--accent-mint); border-radius: 18px; }
+        .co-progress-ring { display: none !important; }
+
+        /* Payment Options */
+        .payment-list { display: flex; flex-direction: column; gap: 10px; }
+        .payment-option {
+            display: flex; align-items: center; gap: 12px;
+            background: #141414; border: 1.5px solid #1d1d1d;
+            padding: 10px 14px; border-radius: 16px; cursor: pointer; transition: 0.25s;
+        }
+        .payment-option:hover { border-color: rgba(0,243,188,0.4); }
+        .payment-option.selected {
+            border-color: var(--accent-mint);
+            background: rgba(0,243,188,0.06);
+            box-shadow: 0 0 0 1px rgba(0,243,188,0.15);
+        }
+        .pm-logo {
+            width: 38px; height: 38px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; overflow: hidden; background: #fff;
+        }
+        .pm-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .pm-info { flex: 1; min-width: 0; }
+        .pm-info .pm-name { font-size: 12px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .pm-info .pm-number { font-size: 13px; font-weight: 700; color: #ccc; letter-spacing: 0.5px; }
+        .pm-radio {
+            width: 18px; height: 18px; border-radius: 50%; border: 2px solid #333;
+            flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: 0.25s;
+        }
+        .pm-radio::after {
+            content: ""; width: 9px; height: 9px; border-radius: 50%;
+            background: var(--accent-mint); transform: scale(0); transition: 0.2s;
+        }
+        .payment-option.selected .pm-radio { border-color: var(--accent-mint); }
+        .payment-option.selected .pm-radio::after { transform: scale(1); }
+        .pm-copy { color: #555; font-size: 13px; padding: 6px; transition: 0.2s; flex-shrink: 0; }
+        .pm-copy:hover { color: var(--accent-mint); }
+        .pm-copy.copied { color: var(--accent-mint); }
+
+        .btn-confirm-pay {
+            width: 100%; padding: 15px; border-radius: 30px; border: none;
+            background: var(--accent-gradient); font-weight: 800; font-size: 14px;
+            cursor: pointer; box-shadow: var(--shadow-glow);
+        }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="brand">Wnfx<span>Library</span></div>
+        <div class="brand">XgusXG<span>Products</span></div>
         <div class="nav-right" style="display:flex; gap:15px; font-size:18px;">
             <i class="fa-solid fa-cart-shopping" onclick="location.href='index.html?open=cart'"></i>
         </div>
@@ -168,17 +249,14 @@
 
     <div class="filter-scroll">
         <div class="chip active" onclick="setCategory('All', this)">All</div>
-        <div class="chip" onclick="setCategory('Phonk', this)">Phonk</div>
-        <div class="chip" onclick="setCategory('Remix', this)">Remix</div>
-        <div class="chip" onclick="setCategory('Hipdut', this)">Hipdut</div>
-        <div class="chip" onclick="setCategory('Presets', this)">Presets</div>
-        <div class="chip" onclick="setCategory('Stems', this)">Stems</div>
+
     </div>
 
     <div class="product-grid" id="productGrid">
         <p style="grid-column: span 2; text-align: center; color: #444; padding: 40px;">Loading catalog...</p>
     </div>
 
+    <!-- FLOATING PLAYER -->
     <footer class="floating-player" id="mainPlayer">
         <div class="player-inner">
             <div class="album-art-mini" id="playerArt"><i class="fa-solid fa-compact-disc"></i></div>
@@ -193,16 +271,103 @@
         </div>
     </footer>
 
+    <!-- CHECKOUT OVERLAY (persis index.html) -->
     <div class="overlay" id="checkoutOverlay">
         <div class="checkout-card">
-            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                <h2 style="font-size:18px;">Product Detail</h2>
-                <i class="fa-solid fa-xmark" onclick="closeCheckout()" style="cursor:pointer"></i>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 4px; height: 14px; background: var(--accent-mint); border-radius: 10px;"></div>
+                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #fff; text-transform: uppercase;">Checkout Detail</span>
+                </div>
+                <i class="fa-solid fa-circle-xmark" style="cursor:pointer; font-size: 22px; color: #222; transition: 0.3s;" onclick="closeCheckout()"></i>
             </div>
-            <img src="" id="coImg" style="width:100%; border-radius:15px; margin-bottom:15px; aspect-ratio:1/1; object-fit:cover;">
-            <h3 id="coTitle">Track Name</h3>
-            <p id="coGenre" style="font-size:12px; color:#888; margin-bottom:20px;">Genre • FLM Project</p>
-            <button class="btn-get" id="btnConfirm" style="width:100%; padding:15px; border-radius:30px; font-size:14px;">GET NOW</button>
+
+            <div style="display: flex; gap: 16px; margin-bottom: 20px; align-items: center;">
+                <div class="co-img-wrapper" id="coImgWrapper" onclick="togglePreviewAudio()">
+                    <div class="co-progress-ring"></div>
+                    <img src="" id="coImg" />
+                    <div class="co-play-btn" id="coPlayIcon">
+                        <i class="fa-solid fa-play" id="coPlayIconI"></i>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 0;">
+                    <h3 id="coTitle" style="font-size: 16px; font-weight: 800; color: #fff; margin: 0 0 4px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3;">Track Name</h3>
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <span id="coGenre" style="font-size: 10px; color: #666; font-weight: 600;">Genre • FLM</span>
+                    </div>
+                    <div id="coPrice" style="color: var(--accent-mint); font-weight: 900; font-size: 16px; margin-top: 6px;">IDR 0</div>
+                </div>
+            </div>
+
+            <div id="coDesc" style="font-size: 11px; color: #999; background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 15px; margin-bottom: 12px; line-height: 1.5; max-height: 60px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.02);">
+                No description.
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding: 0 5px;">
+                <input type="checkbox" id="checkRead" style="width: 16px; height: 16px; accent-color: var(--accent-mint); cursor: pointer;" onchange="togglePayButton()">
+                <label for="checkRead" style="font-size: 11px; color: #666; cursor: pointer; user-select: none;">Saya sudah membaca & setuju dengan catatan di atas.</label>
+            </div>
+
+            <div id="paymentArea" style="display: none; margin-bottom: 18px;">
+                <div style="font-size: 10px; color: #555; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; padding: 0 2px;">
+                    Pilih Metode Pembayaran
+                </div>
+                <div class="payment-list">
+
+                    <!-- DANA -->
+                    <div class="payment-option selected" data-method="DANA" data-number="087761132695" onclick="selectPayment(this)">
+                        <div class="pm-logo" style="background:#fff;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" alt="DANA">
+                        </div>
+                        <div class="pm-info">
+                            <div class="pm-name">DANA</div>
+                            <div class="pm-number">087761132695</div>
+                        </div>
+                        <i class="fa-regular fa-copy pm-copy" onclick="copyPmNumber(event, '087761132695')"></i>
+                        <div class="pm-radio"></div>
+                    </div>
+
+                    <!-- GOPAY -->
+                    <div class="payment-option" data-method="GoPay" data-number="085894847455" onclick="selectPayment(this)">
+                        <div class="pm-logo" style="background:#fff;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" alt="GoPay">
+                        </div>
+                        <div class="pm-info">
+                            <div class="pm-name">GoPay</div>
+                            <div class="pm-number">085894847455</div>
+                        </div>
+                        <i class="fa-regular fa-copy pm-copy" onclick="copyPmNumber(event, '085894847455')"></i>
+                        <div class="pm-radio"></div>
+                    </div>
+
+                    <!-- BANK JAGO -->
+                    <div class="payment-option" data-method="Bank Jago" data-number="104636561220" onclick="selectPayment(this)">
+                        <div class="pm-logo" style="background:#fff;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo-jago.svg" alt="Bank Jago">
+                        </div>
+                        <div class="pm-info">
+                            <div class="pm-name">Bank Jago</div>
+                            <div class="pm-number">104636561220</div>
+                        </div>
+                        <i class="fa-regular fa-copy pm-copy" onclick="copyPmNumber(event, '104636561220')"></i>
+                        <div class="pm-radio"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button class="btn-confirm-pay" id="btnConfirm" style="height: 48px; border-radius: 16px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border: none; box-shadow: 0 4px 15px rgba(0,243,188,0.2); opacity: 0.4; cursor: not-allowed;" disabled>
+                    CONFIRM & GET
+                </button>
+                <a href="presets.html" style="text-decoration: none;">
+                    <div style="font-size: 10px; color: #444; text-align: center; font-weight: 700; transition: 0.3s;">
+                        <i class="fa-solid fa-wave-square"></i> NEED PRESETS ONLY? <span style="text-decoration: underline;">CLICK HERE</span>
+                    </div>
+                </a>
+            </div>
+
         </div>
     </div>
 
@@ -216,10 +381,12 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAaPyl0-gKKhxKjhyCmqduUF11N6C1ngZ4",
             authDomain: "omwnfx1.firebaseapp.com",
+            databaseURL: "https://omwnfx1-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "omwnfx1",
             storageBucket: "omwnfx1.firebasestorage.app",
             messagingSenderId: "1063248927187",
@@ -228,27 +395,130 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const rtdb = getDatabase(app);
 
         let allProducts = [];
         let currentCategory = 'All';
         let audioPlayer = new Audio();
         let isPlaying = false;
+        let previewAudio = new Audio();
+        let previewPlaying = false;
+        let allProductsCache = [];
+        let selectedPaymentMethod = "DANA";
+        let selectedPaymentNumber = "087761132695";
 
+        // --- HELPERS ---
+        function formatIDR(val) {
+            return "IDR " + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${sec < 10 ? '0' + sec : sec}`;
+        }
+
+        // --- USER REGISTRATION (sama persis index.html) ---
+        function getOrPromptUser() {
+            return new Promise((resolve) => {
+                const stored = localStorage.getItem('userData');
+                if (stored) { resolve(JSON.parse(stored)); return; }
+
+                const overlay = document.createElement('div');
+                overlay.id = 'registerOverlay';
+                overlay.style.cssText = `
+                    position:fixed; top:0; left:0; width:100%; height:100%;
+                    background:rgba(0,0,0,0.85); backdrop-filter:blur(10px);
+                    display:flex; justify-content:center; align-items:center;
+                    z-index:99999; padding:20px;
+                `;
+                overlay.innerHTML = `
+                    <div style="background:#111; border:1px solid #222; border-radius:24px;
+                        padding:30px; width:100%; max-width:360px;
+                        animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                        <h2 style="font-size:20px; font-weight:800; margin-bottom:6px;">Daftar Dulu 👋</h2>
+                        <p style="font-size:13px; color:#666; margin-bottom:24px;">
+                            Masukkan nama kamu untuk melanjutkan order. Cukup sekali aja!
+                        </p>
+                        <input id="regNameInput" type="text" placeholder="Nama kamu..." style="
+                            width:100%; background:#1a1a1a; border:1.5px solid #2a2a2a;
+                            border-radius:14px; padding:14px 18px; color:#fff;
+                            font-size:15px; font-family:inherit; outline:none;
+                            margin-bottom:16px; box-sizing:border-box; transition:border-color 0.2s;">
+                        <button id="regSubmitBtn" style="
+                            width:100%; padding:15px; border-radius:30px; border:none;
+                            background:linear-gradient(135deg, #e0ff99 0%, #00f3bc 100%);
+                            font-weight:800; font-size:14px; cursor:pointer; color:#000;
+                            box-shadow:0 8px 25px rgba(0,243,188,0.25);">Lanjut Order →</button>
+                    </div>`;
+
+                document.body.appendChild(overlay);
+                const input = document.getElementById('regNameInput');
+                input.focus();
+                input.addEventListener('focus', () => input.style.borderColor = '#00f3bc');
+                input.addEventListener('blur', () => input.style.borderColor = '#2a2a2a');
+                input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitReg(); });
+                document.getElementById('regSubmitBtn').onclick = submitReg;
+
+                function submitReg() {
+                    const name = input.value.trim();
+                    if (!name) {
+                        input.style.borderColor = '#ff4757';
+                        input.placeholder = 'Nama tidak boleh kosong!';
+                        return;
+                    }
+                    const uid = 'UID-' + Date.now().toString(36).toUpperCase() +
+                                Math.random().toString(36).substr(2, 4).toUpperCase();
+                    const userData = { name, uid };
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    overlay.remove();
+                    resolve(userData);
+                }
+            });
+        }
+
+        // --- SAVE ORDER ---
+        async function saveOrderToRTB(productId, productTitle, price, user) {
+            try {
+                const orderRef = ref(rtdb, 'orderan/' + user.uid);
+                const newOrderRef = push(orderRef);
+                await set(newOrderRef, {
+                    orderId: newOrderRef.key,
+                    productId, productTitle, price,
+                    status: "Pending",
+                    timestamp: Date.now(),
+                    userName: user.name,
+                    userUID: user.uid
+                });
+                console.log("Pesanan berhasil dicatat!");
+            } catch (error) {
+                console.error("Gagal catat pesanan:", error);
+                throw error;
+            }
+        }
+
+        // --- FETCH PRODUCTS ---
         async function fetchLibrary() {
             const querySnapshot = await getDocs(collection(db, "products"));
             allProducts = [];
-            querySnapshot.forEach((doc) => {
-                allProducts.push({ id: doc.id, ...doc.data() });
+            querySnapshot.forEach((d) => {
+                allProducts.push({ id: d.id, ...d.data() });
             });
+            allProductsCache = allProducts;
             renderProducts(allProducts);
         }
 
         function renderProducts(data) {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = '';
+            if (data.length === 0) {
+                grid.innerHTML = '<p style="grid-column: span 2; text-align: center; color: #444; padding: 40px;">Tidak ada produk ditemukan.</p>';
+                return;
+            }
             data.forEach(prod => {
                 const price = parseInt(prod.harga) || 0;
-                const displayPrice = price === 0 ? "FREE" : "IDR " + price.toLocaleString('id-ID');
+                const displayPrice = price === 0 ? "FREE" : formatIDR(price);
+                const desc = prod.deskripsi || 'No description provided for this project.';
                 
                 grid.innerHTML += `
                     <div class="lib-card">
@@ -264,7 +534,7 @@
                             <p>FL Studio Mobile</p>
                             <div class="lib-footer">
                                 <span class="lib-price" style="${price === 0 ? 'color:var(--accent-mint)' : ''}">${displayPrice}</span>
-                                <button class="btn-get" onclick="openDetail('${prod.id}', '${prod.judul}', '${prod.avatar}', '${displayPrice}', '${prod.genre}', '${prod.downloadlink}')">GET</button>
+                                <button class="btn-get" onclick="openCheckout('${prod.id}', '${prod.judul}', '${prod.avatar}', '${displayPrice}', '${prod.genre}', \`${desc}\`)">GET</button>
                             </div>
                         </div>
                     </div>
@@ -272,6 +542,7 @@
             });
         }
 
+        // --- AUDIO PREVIEW (player kecil) ---
         window.playPreview = function(audioSrc, title, img, el) {
             const player = document.getElementById('mainPlayer');
             const icon = el.querySelector('i');
@@ -295,7 +566,6 @@
         function updateUI(activeIcon) {
             document.querySelectorAll('.play-btn-circle i').forEach(i => i.className = 'fa-solid fa-play');
             const mainPlayBtn = document.getElementById('mainPlayBtn');
-            
             if (isPlaying) {
                 if (activeIcon) activeIcon.className = 'fa-solid fa-pause';
                 mainPlayBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
@@ -304,17 +574,11 @@
             }
         }
 
-        // Seek Bar Logic
         audioPlayer.ontimeupdate = () => {
-            const pct = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            const pct = (audioPlayer.currentTime / (audioPlayer.duration || 1)) * 100;
             document.getElementById('seekFill').style.width = pct + '%';
-            document.getElementById('player-time').innerText = formatTime(audioPlayer.currentTime) + " / 0:30";
+            document.getElementById('player-time').innerText = formatTime(audioPlayer.currentTime) + " / " + formatTime(audioPlayer.duration || 0);
         };
-
-        function formatTime(s) {
-            const m = Math.floor(s/60); const sc = Math.floor(s%60);
-            return `${m}:${sc < 10 ? '0'+sc : sc}`;
-        }
 
         document.getElementById('mainPlayBtn').onclick = () => {
             audioPlayer.paused ? audioPlayer.play() : audioPlayer.pause();
@@ -322,7 +586,29 @@
             updateUI();
         };
 
-        // Logic Filter & Search (Reuse from your prompt)
+        // --- PREVIEW AUDIO DI CHECKOUT ---
+        window.togglePreviewAudio = function() {
+            const wrapper = document.getElementById('coImgWrapper');
+            const icon = document.getElementById('coPlayIconI');
+            if (!previewAudio.src || previewAudio.src === window.location.href) return;
+            if (previewPlaying) {
+                previewAudio.pause(); previewPlaying = false;
+                wrapper.classList.remove('playing');
+                icon.className = 'fa-solid fa-play';
+            } else {
+                previewAudio.play(); previewPlaying = true;
+                wrapper.classList.add('playing');
+                icon.className = 'fa-solid fa-pause';
+            }
+        };
+        previewAudio.onended = function() {
+            previewPlaying = false;
+            document.getElementById('coImgWrapper')?.classList.remove('playing');
+            const icon = document.getElementById('coPlayIconI');
+            if (icon) icon.className = 'fa-solid fa-play';
+        };
+
+        // --- FILTER & SEARCH ---
         window.filterProducts = function() {
             const keyword = document.getElementById('libSearch').value.toLowerCase();
             const filtered = allProducts.filter(p => {
@@ -340,22 +626,135 @@
             filterProducts();
         }
 
-        window.openDetail = function(id, title, img, price, genre, link) {
-            document.getElementById('coTitle').innerText = title;
-            document.getElementById('coImg').src = img;
-            document.getElementById('coGenre').innerText = genre + ' • FLM Project';
-            document.getElementById('checkoutOverlay').style.display = 'flex';
+        // --- TOGGLE PAY BUTTON ---
+        window.togglePayButton = function() {
+            const checkbox = document.getElementById('checkRead');
             const btn = document.getElementById('btnConfirm');
-            btn.innerText = price === "FREE" ? "DOWNLOAD NOW" : "BUY " + price;
-            btn.onclick = async () => {
-                if(price === "FREE") {
-                    await updateDoc(doc(db, "products", id), { checkout: increment(1) });
-                    window.open(link, '_blank');
-                } else { alert("Contact admin for premium files."); }
-            };
-        }
+            if (!checkbox || !btn) return;
+            btn.disabled = !checkbox.checked;
+            btn.style.opacity = checkbox.checked ? "1" : "0.4";
+            btn.style.cursor = checkbox.checked ? "pointer" : "not-allowed";
+        };
 
-        window.closeCheckout = () => document.getElementById('checkoutOverlay').style.display = 'none';
+        // --- SELECT PAYMENT ---
+        window.selectPayment = function(el) {
+            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPaymentMethod = el.dataset.method;
+            selectedPaymentNumber = el.dataset.number;
+        };
+
+        // --- COPY PAYMENT NUMBER ---
+        window.copyPmNumber = function(event, number) {
+            event.stopPropagation();
+            navigator.clipboard.writeText(number).then(() => {
+                const icon = event.target;
+                icon.classList.replace('fa-regular', 'fa-solid');
+                icon.classList.add('fa-check', 'copied');
+                icon.classList.remove('fa-copy');
+                setTimeout(() => {
+                    icon.classList.replace('fa-solid', 'fa-regular');
+                    icon.classList.add('fa-copy');
+                    icon.classList.remove('fa-check', 'copied');
+                }, 1200);
+            });
+        };
+
+        // --- OPEN CHECKOUT (sama persis index.html) ---
+        window.openCheckout = function(id, title, img, price, genre, desc = "") {
+            try {
+                const checkbox = document.getElementById('checkRead');
+                if (checkbox) { checkbox.checked = false; window.togglePayButton(); }
+
+                document.getElementById('coTitle').innerText = title;
+                document.getElementById('coImg').src = img;
+                document.getElementById('coPrice').innerText = price;
+                document.getElementById('coGenre').innerText = (genre || 'Remix') + ' • FLM Project';
+                const descEl = document.getElementById('coDesc');
+                if (descEl) descEl.innerHTML = desc || "No description available.";
+
+                // Reset preview audio
+                previewAudio.pause(); previewPlaying = false;
+                document.getElementById('coImgWrapper')?.classList.remove('playing');
+                const playIcon = document.getElementById('coPlayIconI');
+                if (playIcon) playIcon.className = 'fa-solid fa-play';
+
+                // Set preview audio dari cache
+                const prodData = allProductsCache.find(p => p.id === id);
+                previewAudio.src = prodData?.audio || '';
+
+                const payArea = document.getElementById('paymentArea');
+                const btn = document.getElementById('btnConfirm');
+                const isFree = (price.toUpperCase() === "FREE" || price === "0" || price.includes("IDR 0"));
+
+                if (isFree) {
+                    if (payArea) payArea.style.display = 'none';
+                    btn.innerText = "GET NOW (FREE)";
+                    btn.style.background = "var(--accent-mint)";
+                    btn.onclick = async () => {
+                        try {
+                            await updateDoc(doc(db, "products", id), { checkout: increment(1) });
+                            const dLink = prodData?.downloadlink;
+                            if (dLink && (dLink.includes("drive.google.com") || dLink.startsWith("http"))) {
+                                window.closeCheckout();
+                                window.open(dLink, '_blank');
+                            } else {
+                                alert("Link download tidak valid atau belum tersedia.");
+                            }
+                        } catch (e) {
+                            console.error(e);
+                            alert("Terjadi kesalahan.");
+                        }
+                    };
+                } else {
+                    if (payArea) payArea.style.display = 'block';
+                    btn.innerText = "KIRIM BUKTI TRANSFER";
+                    btn.style.background = "#25D366";
+                    btn.onclick = async () => {
+                        try {
+                            btn.disabled = true;
+                            btn.innerText = "Memproses...";
+                            const user = await getOrPromptUser();
+                            await saveOrderToRTB(id, title, price, user);
+                            const waNumber = "6285894847455";
+                            const message = encodeURIComponent(
+                                `Halo XgusXG! 👋\n\nSaya udah transfer buat project ini:\n\n` +
+                                `*Nama:* _${user.name}_\n*UserID:* \`${user.uid}\`\n` +
+                                `*Produk:* _${title}_\n*Harga:* _${price}_\n*ID Produk:* ${id}\n` +
+                                `*Via:* _${selectedPaymentMethod} (${selectedPaymentNumber})_\n\n` +
+                                `*Mohon segera dicek ya!* 🙏`
+                            );
+                            window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
+                            window.closeCheckout();
+                        } catch (e) {
+                            console.error(e);
+                        } finally {
+                            btn.disabled = false;
+                            btn.innerText = "KIRIM BUKTI TRANSFER";
+                        }
+                    };
+                }
+
+                document.getElementById('checkoutOverlay').style.display = 'flex';
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        // --- CLOSE CHECKOUT ---
+        window.closeCheckout = function() {
+            document.getElementById('checkoutOverlay').style.display = 'none';
+            previewAudio.pause(); previewPlaying = false;
+            document.getElementById('coImgWrapper')?.classList.remove('playing');
+            const icon = document.getElementById('coPlayIconI');
+            if (icon) icon.className = 'fa-solid fa-play';
+        };
+
+        // --- TUTUP OVERLAY KLIK LUAR ---
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('checkoutOverlay')) closeCheckout();
+        };
+
         fetchLibrary();
     </script>
 </body>
