@@ -55,7 +55,7 @@
     font-weight: 800;
     letter-spacing: -0.5px;
     color: #fff;
-    text-transform: uppercase;
+    
 }
 
 .brand span {
@@ -1011,6 +1011,10 @@ body {
 }
 
 /* Glow border saat playing, lebih clean */
+.co-img-wrapper.playing {
+    box-shadow: 0 0 0 3px var(--accent-mint);
+    border-radius: 18px;
+}
 
 .co-img-wrapper.playing img {
     filter: brightness(0.5);
@@ -1022,27 +1026,16 @@ body {
 
     <nav class="navbar">
 <div class="brand">
-    <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;">
-        <defs>
-            <linearGradient id="gradFlow" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#c471ed" />
-                <stop offset="100%" stop-color="#d4ff70" />
-            </linearGradient>
-             <filter id="glowFlow">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-        </defs>
-        <circle cx="50" cy="50" r="40" stroke="url(#gradFlow)" stroke-width="2" stroke-dasharray="5 5" opacity="0.5" filter="url(#glowFlow)"/>
-        <path d="M25 50C25 36 36 25 50 25C64 25 75 36 75 50" stroke="url(#gradFlow)" stroke-width="8" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="2s" repeatCount="indefinite" />
-        </path>
-        <path d="M75 50C75 64 64 75 50 75C36 75 25 64 25 50" stroke="#fff" stroke-width="6" stroke-linecap="round">
-             <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="2s" repeatCount="indefinite" />
-        </path>
-        <circle cx="50" cy="50" r="6" fill="#fff"/>
-    </svg>
-    Wnfx<span>Mix</span>
+    <img src="logo1.jpg" alt="XgusXG Logo" style="
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+        border: 2px solid var(--accent-mint);
+        box-shadow: 0 0 10px rgba(0, 243, 188, 0.3);
+    ">
+    XgusXG
 </div>
 
 
@@ -1071,17 +1064,10 @@ body {
     <!-- Dropdown hasil search -->
     <div class="search-dropdown" id="searchDropdown"></div>
         </div>
-        <button class="btn-waitlist" onclick="alert('Opening Full Library...')">Explore Library</button>
+        <button class="btn-waitlist" onclick="alert('Opening Full Library...')">Explore Products</button>
     </header>
 
-    <div class="bento-grid">
-        <div class="card tall c-phonk" onclick="filterBy('Phonk')"><h3>Phonk<br>Drift</h3></div>
-        <div class="card wide c-remix" onclick="filterBy('Remix')"><h3>New Remixes</h3></div>
-        <div class="card c-stems" onclick="filterBy('Stems')"><h3>Stems</h3></div>
-        <div class="card c-presets" onclick="filterBy('Presets')"><h3>Presets</h3></div>
-        <div class="card tall c-hipdut" onclick="filterBy('Hipdut')"><h3>Hipdut<br>Session</h3></div>
-        <div class="card wide c-popular" onclick="filterBy('Popular')"><h3>Popular Artists</h3></div>
-    </div>
+
 
 
     <div class="section-label">
@@ -1110,53 +1096,13 @@ body {
             </div>
         </div>
     </footer>
-<div class="section-label">
-    <h2>Producer Services</h2>
-    <span class="see-all">All Tools</span>
-</div>
 
-<div class="services-wrapper">
-    <div class="services-container">
-        <a href="tools.html" class="service-item">
-            <div class="service-icon"><i class="fa-solid fa-sliders"></i></div>
-            <span>Tools</span>
-        </a>
-        <a href="mixing.html" class="service-item">
-            <div class="service-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-            <span>Mixing</span>
-        </a>
-        <a href="samples.html" class="service-item">
-            <div class="service-icon"><i class="fa-solid fa-box-open"></i></div>
-            <span>Samples</span>
-        </a>
-        <a href="acapella.html" class="service-item">
-            <div class="service-icon"><i class="fa-solid fa-microphone-lines"></i></div>
-            <span>Acapella</span>
-        </a>
-        <a href="daw.html" class="service-item">
-            <div class="service-icon"><i class="fa-solid fa-computer"></i></div>
-            <span>DAW</span>
-        </a>
-        <a href="presets.html" class="service-item">
-            <div class="service-icon"><i class="fa-solid fa-wave-square"></i></div>
-            <span>Presets</span>
-        </a>
-        <a href="learn.html" class="service-item">
-            <div class="service-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-            <span>Learn</span>
-        </a>
-        <a href="more.html" class="service-item">
-            <div class="service-icon"><i class="fa-solid fa-ellipsis"></i></div>
-            <span>More</span>
-        </a>
-    </div>
-</div>
 
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, getDocs, updateDoc, doc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    
     import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
@@ -1172,11 +1118,11 @@ body {
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const auth = getAuth(app);
+    
     const rtdb = getDatabase(app);
 
     // Mendaftarkan variabel penting ke window agar script di luar module bisa akses
-    window.auth = auth;
+    
     window.db = db;
     window.rtdb = rtdb;
 
@@ -1295,15 +1241,14 @@ body {
     window.loadData = loadData;
 
     // FUNGSI SAVE ORDER (Ditempatkan di dalam module agar kenal 'auth' dan 'rtdb')
-    async function saveOrderToRTB(productId, productTitle, price) {
-        const user = window.auth.currentUser;
-        if (!user) {
-            alert("Waduh, login dulu Bang biar datanya masuk ke akun kamu!");
-            window.location.href = 'login.html';
-            return;
-        }
-        try {
-            const orderRef = ref(window.rtdb, 'pesanan/' + user.uid);
+async function saveOrderToRTB(productId, productTitle, price) {
+    // Pakai userID random yang disimpan di localStorage
+    if (!localStorage.getItem('guestUID')) {
+        localStorage.setItem('guestUID', 'user_' + Math.random().toString(36).substr(2, 9));
+    }
+    const guestUID = localStorage.getItem('guestUID');
+    try {
+        const orderRef = ref(window.rtdb, 'pesanan/' + guestUID);
             const newOrderRef = push(orderRef);
             await set(newOrderRef, {
                 orderId: newOrderRef.key,
@@ -1312,7 +1257,7 @@ body {
                 price: price,
                 status: "Pending",
                 timestamp: Date.now(),
-                userEmail: user.email
+                userEmail: guestUID
             });
             console.log("Data pesanan berhasil dicatat!");
         } catch (error) {
@@ -1784,14 +1729,7 @@ previewAudio.onended = function() {
         </button>
     </div>
 </div>
-<div style="margin: 20px; width: calc(100% - 40px); max-width: 440px; background: var(--accent-gradient); padding: 25px; border-radius: 20px; color: #000; position: relative; overflow: hidden;">
-    <div style="position: relative; z-index: 2;">
-        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Join Producer Circle</h2>
-        <p style="font-size: 12px; font-weight: 500; margin-bottom: 15px; opacity: 0.8;">Dapatkan tips FLM & project gratis setiap minggu via Telegram.</p>
-        <button style="background: #000; color: #fff; border: none; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; cursor: pointer;">JOIN NOW</button>
-    </div>
-    <i class="fa-solid fa-users" style="position: absolute; right: -20px; bottom: -20px; font-size: 120px; opacity: 0.1; color: #000;"></i>
-</div>
+
 
 <div class="section-label">
     <h2>Producer Reviews</h2>
@@ -1844,16 +1782,11 @@ previewAudio.onended = function() {
     
     <a href="produk.html" class="nav-item">
         <i class="fa-solid fa-layer-group"></i>
-        <span>Library</span>
+        <span>Products</span>
     </a>
         <a href="transaksi.html" class="nav-item">
         <i class="fa-solid fa-cart-shopping"></i>
         <span>Order</span>
-    </a>
-    
-    <a href="profile.html" class="nav-item">
-        <i class="fa-solid fa-circle-user"></i>
-        <span>Account</span>
     </a>
 </nav>
 
