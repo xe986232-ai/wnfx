@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XgusXG | Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script type="module" crossorigin src="/wnfx/assets/qz91-C3I02rUf.js"></script>
+  <link rel="modulepreload" crossorigin href="/wnfx/assets/index.esm-X-q_wK43.js">
+  <link rel="stylesheet" crossorigin href="/wnfx/assets/qz91-Cj_jS3fm.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="brand">
+        <div class="brand-icon">X</div>
+        Xgus<span>XG</span> <span style="color:#666; font-weight:600; font-size:13px; margin-left:8px;">Admin</span>
+    </div>
+    <div class="nav-right">
+        <i class="fa-solid fa-circle-user"></i>
+    </div>
+</nav>
+
+<div class="tab-wrapper">
+    <div class="nav-tabs">
+        <button class="tab-btn active" data-tab="orders"><i class="fa-solid fa-cart-shopping"></i> Pesanan</button>
+        <button class="tab-btn" data-tab="products"><i class="fa-solid fa-layer-group"></i> Produk</button>
+        <button class="tab-btn" data-tab="upload"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</button>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- ================= TAB: ORDERS ================= -->
+    <div id="orders-tab" class="tab-content active">
+        <div class="section-title">Antrian Pesanan</div>
+        <div class="stats-grid">
+            <div class="stat-card"><div class="num" id="statTotal">0</div><div class="lbl">Total</div></div>
+            <div class="stat-card"><div class="num" id="statPending">0</div><div class="lbl">Pending</div></div>
+            <div class="stat-card"><div class="num" id="statDone">0</div><div class="lbl">Selesai</div></div>
+        </div>
+        <div id="groupedOrderContainer"><div class="empty-state"><i class="fa-solid fa-spinner spinner"></i><br>Menghubungkan ke database...</div></div>
+    </div>
+
+    <!-- ================= TAB: PRODUCTS ================= -->
+    <div id="products-tab" class="tab-content">
+        <div class="section-title">Kelola Produk</div>
+        <div id="productContainer"><div class="empty-state"><i class="fa-solid fa-spinner spinner"></i><br>Memuat katalog...</div></div>
+    </div>
+
+    <!-- ================= TAB: UPLOAD ================= -->
+    <div id="upload-tab" class="tab-content">
+        <div class="section-title">Upload Produk Baru</div>
+        <div class="form-card">
+            <div class="input-group">
+                <label>Upload Avatar (JPG/PNG)</label>
+                <input type="file" id="fileInput" accept="image/*">
+                <img id="imgPreview" class="preview-img">
+            </div>
+
+            <div class="input-group">
+                <label>Upload Preview Audio (MP3/WAV)</label>
+                <input type="file" id="audioInput" accept="audio/*">
+                <p id="audioFileName" class="file-info"></p>
+            </div>
+
+            <div class="input-group">
+                <label>Judul Project</label>
+                <input type="text" id="prodTitle" placeholder="Misal: Jedag Jedug Slow">
+            </div>
+
+            <div class="row-2">
+                <div class="input-group">
+                    <label>Nama Artis</label>
+                    <input type="text" id="prodArtist" placeholder="Nama Artist">
+                </div>
+                <div class="input-group">
+                    <label>Genre</label>
+                    <input type="text" id="prodGenre" placeholder="Funky House, dll">
+                </div>
+            </div>
+
+            <div class="row-2">
+                <div class="input-group">
+                    <label>Harga (RP)</label>
+                    <input type="number" id="prodPrice" placeholder="0 = Free">
+                </div>
+                <div class="input-group">
+                    <label>Diskon (RP)</label>
+                    <input type="number" id="prodDiskon" placeholder="0">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Deskripsi Produk</label>
+                <textarea id="prodDesc" placeholder="Jelaskan detail project ini..."></textarea>
+            </div>
+
+            <button id="btnSubmit" class="btn-upload"><i class="fa-solid fa-floppy-disk"></i> SIMPAN KE DATABASE</button>
+
+            <div class="progress-wrapper" id="progressWrapper">
+                <div class="progress-circle">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="bg-ring" cx="60" cy="60" r="52"></circle>
+                        <circle class="fg-ring" id="progressRing" cx="60" cy="60" r="52"
+                            stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
+                    </svg>
+                    <div class="progress-label" id="progressLabel">0%</div>
+                </div>
+                <div class="progress-step-text" id="progressStepText">Mempersiapkan...</div>
+            </div>
+
+            <p id="statusMsg"></p>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= MODAL EDIT PRODUK ================= -->
+<div class="modal" id="editModal">
+    <div class="modal-content">
+        <h3><i class="fa-solid fa-pen" style="color:var(--accent-mint);"></i> Edit Produk</h3>
+        <input type="hidden" id="edit-id">
+
+        <div class="row-2">
+            <div class="input-group">
+                <label>Urutan (Priority)</label>
+                <input type="number" id="edit-priority" placeholder="1 = paling atas">
+            </div>
+            <div class="input-group">
+                <label>Harga (IDR)</label>
+                <input type="number" id="edit-harga">
+            </div>
+        </div>
+
+        <div class="input-group" style="margin-top:14px;">
+            <label>Judul Project</label>
+            <input type="text" id="edit-judul">
+        </div>
+
+        <div class="input-group" style="margin-top:14px;">
+            <label>Link Produk (Slug)</label>
+            <div style="display:flex; gap:8px;">
+                <input type="text" id="edit-linkProduk" placeholder="Klik tombol suntik..." style="flex:1;">
+                <button id="btn-single-inject" class="inject-btn" title="Suntik dari Judul"><i class="fa-solid fa-syringe"></i></button>
+            </div>
+        </div>
+
+        <div class="row-2" style="margin-top:14px;">
+            <div class="input-group">
+                <label>Nama Artis</label>
+                <input type="text" id="edit-artis">
+            </div>
+            <div class="input-group">
+                <label>Genre</label>
+                <input type="text" id="edit-genre">
+            </div>
+        </div>
+
+        <div class="input-group" style="margin-top:14px;">
+            <label>Diskon (IDR)</label>
+            <input type="number" id="edit-diskon">
+        </div>
+
+        <div class="input-group" style="margin-top:14px;">
+            <label>Deskripsi</label>
+            <textarea id="edit-deskripsi"></textarea>
+        </div>
+
+        <div class="input-group" style="margin-top:14px;">
+            <label>Link File Project (Google Drive/Mega)</label>
+            <input type="text" id="edit-downloadlink" placeholder="Tempel link file di sini...">
+        </div>
+
+        <div class="input-group" style="margin-top:14px;">
+            <label>Ganti Avatar (Image)</label>
+            <input type="file" id="replace-avatar" accept="image/*">
+        </div>
+
+        <div class="input-group" style="margin-top:10px;">
+            <label>Ganti Audio Preview (.mp3)</label>
+            <input type="file" id="replace-audio" accept="audio/*">
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeEditModal()">Batal</button>
+            <button class="btn-save" id="saveProductBtn">Simpan Perubahan</button>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
