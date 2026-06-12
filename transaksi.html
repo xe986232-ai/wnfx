@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wnfx-Mix | My Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-black: #050505;
+            --card-bg: #111111;
+            --accent-mint: #00f3bc;
+            --text-muted: #888;
+            --border-dim: #222;
+            --accent-gradient: linear-gradient(135deg, #e0ff99 0%, #00f3bc 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-black);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 110px;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .brand { font-size: 20px; font-weight: 800; color: #fff; text-transform: uppercase; }
+        .brand span { color: var(--accent-mint); }
+
+        .header-title {
+            width: 100%; max-width: 450px; padding: 30px 20px 10px;
+        }
+        .header-title h1 { font-size: 24px; font-weight: 900; }
+        .header-title p { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+
+        /* --- LOADING ANIMATION --- */
+        .loader-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 100px;
+            gap: 15px;
+        }
+        .pulse-loader {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-mint);
+            border-radius: 50%;
+            animation: pulse 1.2s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(0, 243, 188, 0.4);
+        }
+        @keyframes pulse {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .loading-text {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-mint);
+            font-weight: 700;
+        }
+
+        /* --- ORDER LIST SECTION --- */
+        #orderContainer {
+            width: 100%; max-width: 450px; padding: 20px;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+
+        .order-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-dim);
+            border-radius: 22px;
+            padding: 16px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .order-card:active { transform: scale(0.98); }
+
+        .order-img {
+            width: 60px; height: 60px; border-radius: 12px; object-fit: cover;
+            background: #222;
+        }
+
+        .order-info { flex: 1; min-width: 0; }
+        .order-info h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
+        .order-info p { font-size: 10px; color: var(--text-muted); }
+        
+        .status-badge {
+            font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 20px;
+            text-transform: uppercase; margin-top: 8px; display: inline-block;
+        }
+        .status-pending { background: rgba(255, 159, 67, 0.1); color: #ff9f43; }
+        .status-success { background: rgba(0, 243, 188, 0.1); color: var(--accent-mint); }
+
+        .btn-download {
+            background: var(--accent-gradient); color: #000;
+            padding: 8px 15px; border-radius: 10px; font-size: 11px; font-weight: 800;
+            text-decoration: none; display: inline-block; margin-top: 8px;
+            box-shadow: 0 4px 15px rgba(0, 243, 188, 0.2);
+        }
+
+        .empty-state {
+            text-align: center; margin-top: 100px; color: var(--text-muted);
+        }
+        .empty-state i { font-size: 50px; margin-bottom: 15px; opacity: 0.2; }
+
+        /* --- BOTTOM NAV --- */
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 12px 0 25px; border-top: 1px solid rgba(255,255,255,0.1); z-index: 9999; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #666; text-decoration: none; font-size: 10px; flex: 1; }
+        .nav-item.active { color: var(--accent-mint); }
+        .nav-item i { font-size: 20px; }
+    </style>
+  <script type="module" crossorigin src="/wnfx/assets/transaksi-CbNO4cXY.js"></script>
+  <link rel="modulepreload" crossorigin href="/wnfx/assets/modulepreload-polyfill-Dezn_h7o.js">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="brand">Wnfx<span>Mix</span></div>
+        <div class="nav-right"><i class="fa-solid fa-bell"></i></div>
+    </nav>
+
+    <div class="header-title">
+        <h1>My Orders</h1>
+        <p>Kelola semua project dan pembelian kamu.</p>
+    </div>
+
+    <div id="orderContainer">
+        <div class="loader-wrapper">
+            <div class="pulse-loader"></div>
+            <div class="loading-text">Synchronizing...</div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fa-solid fa-house-chimney"></i><span>Home</span></a>
+        <a href="produk.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Library</span></a>
+        <a href="transaksi.html" class="nav-item active"><i class="fa-solid fa-cart-shopping"></i><span>Order</span></a>
+        <a href="profile.html" class="nav-item"><i class="fa-solid fa-circle-user"></i><span>Account</span></a>
+    </nav>
+
+</body>
+</html>
