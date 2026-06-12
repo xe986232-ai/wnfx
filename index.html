@@ -6,6 +6,7 @@
     <title>Wnfx-Mix | Next-Gen FLM Marketplace</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 <style>
   
         :root {
@@ -21,6 +22,14 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Remix card helper classes */
+        .bl-tr-radius-40 { border-bottom-left-radius: 40px; border-top-right-radius: 40px; }
+        .rounded-tr-inner { border-top-right-radius: calc(40px - 8px); }
+        .md-rounded-tr-inner { border-top-right-radius: calc(40px - 16px); }
+        .line-clamp-1, .line-clamp-2 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-1 { -webkit-line-clamp: 1; }
+        .line-clamp-2 { -webkit-line-clamp: 2; }
 
         body {
             background-color: var(--bg-black);
@@ -1144,8 +1153,64 @@ body {
         <button class="btn-waitlist" onclick="alert('Opening Full Library...')">Explore Products</button>
     </header>
 
+  
 
 
+    <section class="px-4 pb-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="mb-4">
+                <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Remix Preview</p>
+                <h2 class="text-2xl font-bold">Remix Card</h2>
+            </div>
+
+            <div id="remixCardSection" class="grid h-[300px] grid-cols-2 grid-rows-2 items-center gap-2 border p-2 bl-tr-radius-40 md:flex md:h-[200px] lg:h-[228px] md:gap-4 lg:gap-6 md:p-4 list-none"
+                style="border-color: rgba(79, 251, 127, 0.5);">
+
+                <div id="remixArtistCard" class="relative h-full rounded-[calc(40px-8px)] md:aspect-square md:rounded-[calc(40px-16px)] overflow-hidden bg-gray-800">
+                    <img id="remixArtistImage" src="" alt="Artist" class="h-full w-full object-cover rounded-bl-[40px] rounded-tr-[40px]">
+                    <p class="absolute left-0 top-0 p-3 text-lg font-light text-white">Dumbfoundead</p>
+                    <div class="absolute bottom-[-4px] right-[-4px] hidden h-1/3 w-1/3 rounded-lg border border-black shadow-lg md:block cursor-pointer">
+                        <img id="remixPackImage" src="" class="h-full w-full object-cover rounded-lg">
+                        <div class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-transparent">
+                            <button class="text-white border border-white/20 p-1 rounded-full">▶</button>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="text-lime-400 text-4xl font-bold hidden md:block">+</span>
+
+                <div class="flex h-full w-full flex-col justify-between rounded-tr-inner bg-white/5 p-4 md:rounded-tr-inner">
+                    <p id="remixTitle" class="text-lg font-bold md:text-2xl text-white">Lo-fi Jazz Fusion</p>
+                    <p id="remixDescription" class="line-clamp-2 text-xs md:text-sm text-gray-300">Feeling of “Lo-fi jazz,” consider a blend of smooth, mellow rhythms with warm, soft piano chords and delicate saxophone riffs.</p>
+                </div>
+
+                <span class="text-lime-400 text-4xl font-bold hidden md:block">=</span>
+
+                <div id="remixCardPink" class="remix-card cursor-pointer relative aspect-square h-full flex flex-col items-center justify-between p-2 rounded-lg bg-[#c71661] text-white" data-audio="" data-img="">
+                    <div class="flex w-full items-center justify-between text-[10px] font-semibold">
+                        <span>MIX</span> <span>REMIX</span>
+                    </div>
+                    <img id="remixCardPinkImg" src="" class="h-[60%] w-[60%] rounded-full object-cover">
+                    <span id="remixCardPinkTitle" class="line-clamp-1 font-bold capitalize text-[14px]">Lo-fi Jazz</span>
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-transparent rounded-lg">
+                        <button class="text-white play-trigger">▶</button>
+                    </div>
+                </div>
+
+                <div id="remixCardGreen" class="remix-card cursor-pointer relative aspect-square h-full flex flex-col items-center justify-between p-2 rounded-lg bg-[#c8ff39] text-black" data-audio="" data-img="">
+                    <div class="flex w-full items-center justify-between text-[10px] font-semibold">
+                        <span>MIX</span> <span>REMIX</span>
+                    </div>
+                    <img id="remixCardGreenImg" src="" class="h-[60%] w-[60%] rounded-full object-cover">
+                    <span id="remixCardGreenTitle" class="line-clamp-1 font-bold capitalize text-[14px]">Lo-fi Jazz</span>
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-transparent rounded-lg">
+                        <button class="text-black play-trigger">▶</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
     <div class="section-label">
         <h2>FLM Products</h2>
@@ -1253,6 +1318,8 @@ body {
 
             allProducts.sort(() => Math.random() - 0.5);
             window.allProductsCache = allProducts; // ← Simpan ke cache untuk search dropdown
+            const remixSource = allProducts.find(p => p.audio && p.avatar) || allProducts[0];
+            if (remixSource) renderRemixCard(remixSource);
 
             const premiumContainer = document.getElementById('premiumContainer');
             if (premiumContainer) {
@@ -1317,6 +1384,42 @@ body {
     }
     window.loadData = loadData;
 
+    function renderRemixCard(product) {
+        const title = product.judul || 'Remix Track';
+        const cover = product.avatar || 'https://via.placeholder.com/300';
+        const audio = product.audio || '';
+        const desc = product.deskripsi || product.genre || 'Feeling of “Lo-fi jazz,” consider a blend of smooth, mellow rhythms with warm, soft piano chords and delicate saxophone riffs.';
+
+        const artistImg = document.getElementById('remixArtistImage');
+        const packImg = document.getElementById('remixPackImage');
+        const pinkImg = document.getElementById('remixCardPinkImg');
+        const greenImg = document.getElementById('remixCardGreenImg');
+        const titleEl = document.getElementById('remixTitle');
+        const descEl = document.getElementById('remixDescription');
+        const pinkTitle = document.getElementById('remixCardPinkTitle');
+        const greenTitle = document.getElementById('remixCardGreenTitle');
+        const pinkCard = document.getElementById('remixCardPink');
+        const greenCard = document.getElementById('remixCardGreen');
+
+        if (artistImg) { artistImg.src = cover; artistImg.alt = title; }
+        if (packImg) { packImg.src = cover; }
+        if (pinkImg) { pinkImg.src = cover; }
+        if (greenImg) { greenImg.src = cover; }
+        if (titleEl) titleEl.textContent = title;
+        if (descEl) descEl.textContent = desc;
+        if (pinkTitle) pinkTitle.textContent = title;
+        if (greenTitle) greenTitle.textContent = title;
+        if (pinkCard) {
+            pinkCard.setAttribute('data-audio', audio);
+            pinkCard.setAttribute('data-img', cover);
+        }
+        if (greenCard) {
+            greenCard.setAttribute('data-audio', audio);
+            greenCard.setAttribute('data-img', cover);
+        }
+    }
+    window.renderRemixCard = renderRemixCard;
+
     // FUNGSI SAVE ORDER (Ditempatkan di dalam module agar kenal 'auth' dan 'rtdb')
 async function saveOrderToRTB(productId, productTitle, price) {
     // Pakai userID random yang disimpan di localStorage
@@ -1363,7 +1466,7 @@ async function saveOrderToRTB(productId, productTitle, price) {
 
         allTriggers.forEach(btn => {
             btn.onclick = function() {
-                const parent = this.closest('.track-item') || this.closest('.album-card');
+                const parent = this.closest('.track-item') || this.closest('.album-card') || this.closest('.remix-card');
                 const trackName = parent.querySelector('.track-name')?.innerText || parent.getAttribute('data-judul');
                 const audioSrc = parent.getAttribute('data-audio');
                 const imgSrc = parent.getAttribute('data-img');
@@ -1391,8 +1494,8 @@ async function saveOrderToRTB(productId, productTitle, price) {
     function updateUIStates() {
         if (mainPlayBtn) mainPlayBtn.innerHTML = isPlaying ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
         document.querySelectorAll('.play-trigger i, .play-trigger-premium i').forEach(icon => {
-            const parent = icon.closest('.track-item') || icon.closest('.album-card');
-            if (isPlaying && audioPlayer.src === parent.getAttribute('data-audio')) {
+            const parent = icon.closest('.track-item') || icon.closest('.album-card') || icon.closest('.remix-card');
+            if (parent && isPlaying && audioPlayer.src === parent.getAttribute('data-audio')) {
                 icon.className = 'fa-solid fa-pause';
             } else {
                 icon.className = 'fa-solid fa-play';
