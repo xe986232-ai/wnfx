@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Detail Produk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <script type="module" crossorigin src="./assets/detail-CxL0-J6u.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/index.esm-CvrxiNIc.js">
+  <link rel="stylesheet" crossorigin href="./assets/detail-FGkmbYd1.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="library.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i></a>
+        <div class="brand">XgusXG<span>Products</span></div>
+        <div style="width:36px;"></div>
+    </nav>
+
+    <div class="loading-wrap" id="loadingWrap">
+        <div class="spinner"></div>
+        <p style="color:#333; font-size:12px;">Memuat produk...</p>
+    </div>
+
+    <div class="notfound-wrap" id="notfoundWrap">
+        <i class="fa-solid fa-triangle-exclamation" style="font-size:36px; color:#222; margin-bottom:16px; display:block;"></i>
+        <p style="color:#333; font-size:13px; margin-bottom:8px;">Produk tidak ditemukan.</p>
+        <a href="library.html" style="color:var(--accent-mint); font-size:12px; font-weight:700;">← Kembali ke Library</a>
+    </div>
+
+    <div class="hero-wrap" id="heroWrap" style="display:none;">
+        <img class="hero-img" id="heroImg" src="" alt=""/>
+        <div class="hero-overlay">
+            <div class="hero-badge" id="heroBadge">HOT</div>
+            <div class="hero-title" id="heroTitle">Loading...</div>
+            <div class="hero-sub">FL Studio Mobile Project</div>
+        </div>
+    </div>
+
+    <div class="content-wrap" id="contentWrap">
+
+        <!-- AUDIO PLAYER -->
+        <div class="player-wrap">
+            <div class="section-label">Preview Audio</div>
+
+            <div class="player-top">
+                <button class="btn-play-main" id="btnPlayMain">
+                    <i class="fa-solid fa-play" id="playIcon"></i>
+                </button>
+                <div class="player-meta">
+                    <div class="player-meta-title" id="playerTitle">—</div>
+                    <div class="player-meta-sub">FL Studio Mobile</div>
+                </div>
+                <button class="ctrl-skip" id="btnRewind" title="Mundur 10 detik">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
+                <button class="ctrl-skip" id="btnForward" title="Maju 10 detik">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+
+            <canvas id="waveCanvas"></canvas>
+            <div class="time-row">
+                <span id="currentTime">0:00</span>
+                <span id="totalTime">0:00</span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- PRICE + DESC -->
+        <div class="price-section">
+            <div class="price-row">
+                <span class="price-label">Harga</span>
+                <span class="price-val" id="priceVal">—</span>
+            </div>
+            <div class="desc-text" id="descText">Memuat deskripsi...</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- CHECKOUT: PAID -->
+        <div id="checkoutPaid" style="display:none;">
+            <div class="section-label">Metode Pembayaran</div>
+            <div class="payment-list">
+                <div class="payment-option selected" data-method="DANA" data-number="087761132695" onclick="selectPayment(this)">
+                    <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" alt="DANA"></div>
+                    <div class="pm-info"><div class="pm-name">DANA</div><div class="pm-number">087761132695</div></div>
+                    <i class="fa-regular fa-copy pm-copy" onclick="copyNum(event,'087761132695')"></i>
+                    <div class="pm-radio"></div>
+                </div>
+                <div class="payment-option" data-method="GoPay" data-number="085894847455" onclick="selectPayment(this)">
+                    <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" alt="GoPay"></div>
+                    <div class="pm-info"><div class="pm-name">GoPay</div><div class="pm-number">085894847455</div></div>
+                    <i class="fa-regular fa-copy pm-copy" onclick="copyNum(event,'085894847455')"></i>
+                    <div class="pm-radio"></div>
+                </div>
+                <div class="payment-option" data-method="Bank Jago" data-number="104636561220" onclick="selectPayment(this)">
+                    <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo-jago.svg" alt="Bank Jago"></div>
+                    <div class="pm-info"><div class="pm-name">Bank Jago</div><div class="pm-number">104636561220</div></div>
+                    <i class="fa-regular fa-copy pm-copy" onclick="copyNum(event,'104636561220')"></i>
+                    <div class="pm-radio"></div>
+                </div>
+            </div>
+            <div class="agree-row">
+                <input type="checkbox" id="checkAgree" onchange="toggleConfirm()">
+                <label for="checkAgree">Saya sudah membaca & setuju dengan catatan di atas.</label>
+            </div>
+            <button class="btn-confirm" id="btnConfirm" disabled onclick="doCheckout()">KIRIM BUKTI TRANSFER</button>
+            <div class="divider"></div>
+        </div>
+
+        <!-- CHECKOUT: FREE -->
+        <div id="checkoutFree" style="display:none; margin-bottom:0;">
+            <button class="btn-confirm-free" onclick="doFreeDownload()">
+                <i class="fa-solid fa-download"></i> GET NOW — FREE!
+            </button>
+            <div class="divider"></div>
+        </div>
+
+        <!-- SHARE -->
+        <button class="btn-share-detail" onclick="shareThis()">
+            <i class="fa-solid fa-share-nodes"></i> Bagikan Produk Ini
+        </button>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fa-solid fa-house-chimney"></i><span>Home</span></a>
+        <a href="library.html" class="nav-item active"><i class="fa-solid fa-layer-group"></i><span>Products</span></a>
+        <a href="javascript:void(0)" class="nav-item" onclick="showToast('Buka Keranjang di Halaman Utama')"><i class="fa-solid fa-cart-shopping"></i><span>Orders</span></a>
+    </nav>
+
+
+</body>
+</html>
