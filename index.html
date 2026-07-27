@@ -34,8 +34,6 @@
 <i class="fa-solid fa-bag-shopping" onclick="openCart()">
     <span class="cart-count" id="cartBadge">0</span>
 </i>
-
-            <i class="fa-solid fa-bars-staggered"></i>
         </div>
     </nav>
 
@@ -408,5 +406,13 @@
 </div>
 
 
+<!-- Lenis smooth scrolling -->
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+    (function(){
+        if (typeof Lenis === "undefined") return;
+        const lenis = new Lenis({ autoRaf: true });
+    })();
+</script>
 </body>
 </html>
