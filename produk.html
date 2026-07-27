@@ -6,9 +6,9 @@
     <title>Wnfx Library | Premium FLM Resources</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script type="module" crossorigin src="./assets/produk-DSFByHbI.js?v=3"></script>
+  <script type="module" crossorigin src="./assets/produk-DSFByHbI.js?v=4"></script>
   <link rel="modulepreload" crossorigin href="./assets/index.esm-CvrxiNIc.js">
-  <link rel="stylesheet" crossorigin href="./assets/produk--S83So3y.css?v=3">
+  <link rel="stylesheet" crossorigin href="./assets/produk--S83So3y.css?v=4">
 </head>
 <body>
 
@@ -58,10 +58,22 @@
         .genre-option{padding:10px 12px;border-radius:8px;font-size:13px;font-weight:600;color:#ccc;cursor:pointer;transition:all .2s;white-space:nowrap}
         .genre-option:hover{background:#1a1a1a;color:#fff}
         .genre-option.active{background:var(--accent-mint);color:#000}
+
+        .skeleton-card{cursor:default}
+        .skeleton-thumb{aspect-ratio:1;width:100%;border-radius:16px 16px 0 0}
+        .skeleton-info{padding:14px}
+        .skeleton-line{border-radius:6px;margin-bottom:10px}
+        .skeleton-shimmer{position:relative;overflow:hidden;background:#161616}
+        .skeleton-shimmer::after{content:"";position:absolute;top:0;left:-150%;width:150%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);animation:skeleton-shine 1.2s infinite}
+        @keyframes skeleton-shine{100%{left:150%}}
     </style>
 
     <div class="product-grid" id="productGrid">
-        <p style="grid-column: span 2; text-align: center; color: #444; padding: 40px;">Loading catalog...</p>
+        <!-- Skeleton placeholders shown while products load -->
+        <div class="lib-card skeleton-card"><div class="lib-thumb skeleton-thumb skeleton-shimmer"></div><div class="skeleton-info"><div class="skeleton-line skeleton-shimmer" style="width:85%;height:14px;"></div><div class="skeleton-line skeleton-shimmer" style="width:50%;height:10px;"></div><div class="skeleton-line skeleton-shimmer" style="width:40%;height:18px;margin-bottom:0;"></div></div></div>
+        <div class="lib-card skeleton-card"><div class="lib-thumb skeleton-thumb skeleton-shimmer"></div><div class="skeleton-info"><div class="skeleton-line skeleton-shimmer" style="width:85%;height:14px;"></div><div class="skeleton-line skeleton-shimmer" style="width:50%;height:10px;"></div><div class="skeleton-line skeleton-shimmer" style="width:40%;height:18px;margin-bottom:0;"></div></div></div>
+        <div class="lib-card skeleton-card"><div class="lib-thumb skeleton-thumb skeleton-shimmer"></div><div class="skeleton-info"><div class="skeleton-line skeleton-shimmer" style="width:85%;height:14px;"></div><div class="skeleton-line skeleton-shimmer" style="width:50%;height:10px;"></div><div class="skeleton-line skeleton-shimmer" style="width:40%;height:18px;margin-bottom:0;"></div></div></div>
+        <div class="lib-card skeleton-card"><div class="lib-thumb skeleton-thumb skeleton-shimmer"></div><div class="skeleton-info"><div class="skeleton-line skeleton-shimmer" style="width:85%;height:14px;"></div><div class="skeleton-line skeleton-shimmer" style="width:50%;height:10px;"></div><div class="skeleton-line skeleton-shimmer" style="width:40%;height:18px;margin-bottom:0;"></div></div></div>
     </div>
 
     <!-- FLOATING PLAYER -->
