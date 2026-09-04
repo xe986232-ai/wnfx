@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimoni Pembeli - WNFX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-black: #050505;
+            --card-bg: #111111;
+            --accent-mint: #00f3bc;
+            --text-muted: #888;
+            --border-dim: #222;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-black);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 110px;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            width: 100%; max-width: 480px;
+            display: flex; align-items: center; gap: 14px;
+            padding: 20px; background: var(--bg-black);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-dim);
+        }
+        .navbar .home-btn { cursor: pointer; color: #fff; display: flex; align-items: center; }
+        .brand { display: flex; align-items: center; font-size: 18px; font-weight: 800; text-transform: uppercase; }
+        .brand span { color: var(--accent-mint); }
+
+        .header-hero {
+            width: 100%; max-width: 450px; padding: 30px 20px 10px;
+            text-align: center;
+        }
+        .header-hero h1 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+        .header-hero p { font-size: 12px; color: var(--text-muted); }
+
+        .summary-card {
+            width: 100%; max-width: 450px; margin: 20px auto 0;
+            padding: 20px; background: var(--card-bg); border: 1px solid var(--border-dim);
+            border-radius: 16px; display: flex; align-items: center; gap: 18px;
+        }
+        .summary-score { font-size: 34px; font-weight: 800; line-height: 1; }
+        .summary-stars { color: var(--accent-mint); font-size: 13px; margin: 6px 0 4px; }
+        .summary-count { font-size: 11px; color: var(--text-muted); }
+        .summary-divider { width: 1px; align-self: stretch; background: var(--border-dim); }
+        .summary-note { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+        .form-card {
+            width: 100%; max-width: 450px; margin: 20px auto 0;
+            padding: 20px; background: var(--card-bg); border: 1px solid var(--border-dim);
+            border-radius: 16px;
+        }
+        .form-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+
+        .field-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: block; }
+
+        .rating-picker { display: flex; gap: 8px; margin-bottom: 16px; }
+        .rating-picker i { font-size: 22px; color: #333; cursor: pointer; transition: color 0.15s; }
+        .rating-picker i.filled { color: var(--accent-mint); }
+
+        input.tf-input, textarea.tf-input {
+            width: 100%; background: #0c0c0c; border: 1px solid var(--border-dim);
+            border-radius: 10px; padding: 12px 14px; color: #fff; font-size: 13px;
+            margin-bottom: 16px; resize: none;
+        }
+        input.tf-input:focus, textarea.tf-input:focus { outline: none; border-color: var(--accent-mint); }
+        input.tf-input:disabled { color: var(--text-muted); }
+        textarea.tf-input { min-height: 80px; line-height: 1.5; }
+
+        .btn-submit {
+            width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--accent-mint);
+            background: var(--accent-mint); color: #000; font-weight: 800; font-size: 12px;
+            text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer;
+        }
+        .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .form-hint { font-size: 10px; color: var(--text-muted); margin-top: 10px; text-align: center; }
+
+        .list-section { width: 100%; max-width: 450px; padding: 26px 20px 0; }
+        .list-section h3 { font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+
+        .review-card {
+            border: 1px solid var(--border-dim); border-radius: 14px;
+            padding: 16px; margin-bottom: 12px; background: var(--card-bg);
+        }
+        .review-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .review-avatar {
+            width: 34px; height: 34px; border-radius: 50%; background: #0c0c0c;
+            border: 1px solid var(--border-dim); display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 13px; color: var(--accent-mint); flex-shrink: 0;
+        }
+        .review-name { font-size: 13px; font-weight: 700; }
+        .review-date { font-size: 10px; color: var(--text-muted); }
+        .review-stars { color: var(--accent-mint); font-size: 11px; margin-left: auto; white-space: nowrap; }
+        .review-text { font-size: 12px; color: #ccc; line-height: 1.6; }
+        .review-product { display: inline-block; margin-top: 8px; font-size: 10px; color: var(--accent-mint); border: 1px solid var(--border-dim); border-radius: 6px; padding: 3px 8px; }
+
+        .empty-state, .loading-state { text-align: center; color: var(--text-muted); font-size: 12px; padding: 30px 0; }
+        .loading-state i { display: block; margin-bottom: 8px; font-size: 18px; }
+
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 500px; background: rgba(5, 5, 5, 0.92);
+            display: flex; justify-content: space-around;
+            padding: 12px 0 25px; border-top: 1px solid var(--border-dim); z-index: 9999;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #666; text-decoration: none; font-size: 10px; }
+        .nav-item.active { color: var(--accent-mint); }
+        .nav-item i { font-size: 20px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="home-btn" onclick="location.href='index.html'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+        </div>
+        <div class="brand">WNFX<span>Testimoni</span></div>
+    </nav>
+
+    <header class="header-hero">
+        <h1>Testimoni Pembeli</h1>
+        <p>Semua ulasan dari pembeli dikumpulkan di sini.</p>
+    </header>
+
+    <div class="summary-card">
+        <div>
+            <div class="summary-score" id="avgScore">0.0</div>
+            <div class="summary-stars" id="avgStars">☆☆☆☆☆</div>
+            <div class="summary-count" id="totalCount">0 ulasan</div>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-note">Jujur dari pembeli asli. Makin banyak yang kasih testimoni, makin kelihatan mana project yang paling mantap.</div>
+    </div>
+
+    <div class="form-card">
+        <h3>Tulis Testimoni</h3>
+
+        <label class="field-label">Nama</label>
+        <input type="text" id="tfName" class="tf-input" placeholder="Nama kamu" maxlength="40">
+
+        <label class="field-label">Rating</label>
+        <div class="rating-picker" id="ratingPicker">
+            <i class="fa-solid fa-star" data-val="1"></i>
+            <i class="fa-solid fa-star" data-val="2"></i>
+            <i class="fa-solid fa-star" data-val="3"></i>
+            <i class="fa-solid fa-star" data-val="4"></i>
+            <i class="fa-solid fa-star" data-val="5"></i>
+        </div>
+
+        <label class="field-label">Komentar</label>
+        <textarea id="tfComment" class="tf-input" placeholder="Ceritain pengalaman kamu pakai project ini..." maxlength="300"></textarea>
+
+        <button class="btn-submit" id="tfSubmit" onclick="submitTestimoni()">Kirim Testimoni</button>
+        <p class="form-hint" id="tfHint"></p>
+    </div>
+
+    <div class="list-section">
+        <h3>Semua Ulasan</h3>
+        <div id="reviewList">
+            <div class="loading-state" id="reviewLoader">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                Memuat testimoni...
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fa-solid fa-house-chimney"></i><span>Home</span></a>
+        <a href="produk.html" class="nav-item"><i class="fa-solid fa-layer-group"></i><span>Products</span></a>
+        <a href="testimoni.html" class="nav-item active"><i class="fa-solid fa-comment-dots"></i><span>Testimoni</span></a>
+        <a href="transaksi.html" class="nav-item"><i class="fa-solid fa-cart-shopping"></i><span>Order</span></a>
+    </nav>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import {
+            getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAaPyl0-gKKhxKjhyCmqduUF11N6C1ngZ4",
+            authDomain: "omwnfx1.firebaseapp.com",
+            projectId: "omwnfx1",
+            databaseURL: "https://omwnfx1-default-rtdb.asia-southeast1.firebasedatabase.app",
+            storageBucket: "omwnfx1.firebasestorage.app",
+            messagingSenderId: "1063248927187",
+            appId: "1:1063248927187:web:6bd23f24517b1c2d53b726"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let selectedRating = 0;
+        let currentUser = null;
+
+        const nameInput = document.getElementById('tfName');
+        const ratingPicker = document.getElementById('ratingPicker');
+        const stars = ratingPicker.querySelectorAll('i');
+        const commentInput = document.getElementById('tfComment');
+        const submitBtn = document.getElementById('tfSubmit');
+        const hintEl = document.getElementById('tfHint');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                selectedRating = parseInt(star.dataset.val, 10);
+                renderStars();
+            });
+        });
+
+        function renderStars() {
+            stars.forEach(star => {
+                const val = parseInt(star.dataset.val, 10);
+                star.classList.toggle('filled', val <= selectedRating);
+            });
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                nameInput.value = user.displayName || user.email || 'Pembeli WNFX';
+                nameInput.disabled = true;
+            } else {
+                nameInput.disabled = false;
+                nameInput.value = '';
+            }
+        });
+
+        window.submitTestimoni = async function () {
+            const name = nameInput.value.trim();
+            const comment = commentInput.value.trim();
+
+            if (!name) { hintEl.textContent = 'Isi nama dulu ya.'; return; }
+            if (selectedRating === 0) { hintEl.textContent = 'Pilih rating bintang dulu.'; return; }
+            if (!comment) { hintEl.textContent = 'Tulis komentar dulu ya.'; return; }
+
+            submitBtn.disabled = true;
+            hintEl.textContent = 'Mengirim...';
+
+            try {
+                await addDoc(collection(db, 'testimonials'), {
+                    name: name,
+                    rating: selectedRating,
+                    comment: comment,
+                    userId: currentUser ? currentUser.uid : null,
+                    createdAt: serverTimestamp()
+                });
+
+                commentInput.value = '';
+                selectedRating = 0;
+                renderStars();
+                hintEl.textContent = 'Terima kasih! Testimoni kamu sudah terkirim.';
+            } catch (err) {
+                console.error(err);
+                hintEl.textContent = 'Gagal mengirim, coba lagi.';
+            } finally {
+                submitBtn.disabled = false;
+            }
+        };
+
+        function timeAgo(date) {
+            if (!date) return '';
+            const diffMs = Date.now() - date.getTime();
+            const diffMin = Math.floor(diffMs / 60000);
+            if (diffMin < 1) return 'Baru saja';
+            if (diffMin < 60) return diffMin + ' menit lalu';
+            const diffHr = Math.floor(diffMin / 60);
+            if (diffHr < 24) return diffHr + ' jam lalu';
+            const diffDay = Math.floor(diffHr / 24);
+            if (diffDay < 30) return diffDay + ' hari lalu';
+            return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        function starString(rating) {
+            const full = Math.round(rating);
+            return '★'.repeat(full) + '☆'.repeat(5 - full);
+        }
+
+        const reviewList = document.getElementById('reviewList');
+        const reviewLoader = document.getElementById('reviewLoader');
+
+        const q = query(collection(db, 'testimonials'), orderBy('createdAt', 'desc'));
+
+        onSnapshot(q, (snapshot) => {
+            reviewLoader.remove();
+
+            if (snapshot.empty) {
+                reviewList.innerHTML = '<div class="empty-state">Belum ada testimoni. Jadi yang pertama!</div>';
+                document.getElementById('avgScore').textContent = '0.0';
+                document.getElementById('avgStars').textContent = starString(0);
+                document.getElementById('totalCount').textContent = '0 ulasan';
+                return;
+            }
+
+            let total = 0;
+            const frag = document.createDocumentFragment();
+
+            snapshot.forEach(docSnap => {
+                const data = docSnap.data();
+                const rating = Number(data.rating) || 0;
+                total += rating;
+
+                const createdAt = data.createdAt && data.createdAt.toDate ? data.createdAt.toDate() : null;
+                const name = data.name || 'Pembeli';
+                const initial = name.trim().charAt(0).toUpperCase() || '?';
+
+                const card = document.createElement('div');
+                card.className = 'review-card';
+
+                const top = document.createElement('div');
+                top.className = 'review-top';
+
+                const avatar = document.createElement('div');
+                avatar.className = 'review-avatar';
+                avatar.textContent = initial;
+
+                const nameWrap = document.createElement('div');
+                const nameEl = document.createElement('div');
+                nameEl.className = 'review-name';
+                nameEl.textContent = name;
+                const dateEl = document.createElement('div');
+                dateEl.className = 'review-date';
+                dateEl.textContent = timeAgo(createdAt);
+                nameWrap.appendChild(nameEl);
+                nameWrap.appendChild(dateEl);
+
+                const starsEl = document.createElement('div');
+                starsEl.className = 'review-stars';
+                starsEl.textContent = starString(rating);
+
+                top.appendChild(avatar);
+                top.appendChild(nameWrap);
+                top.appendChild(starsEl);
+
+                const textEl = document.createElement('div');
+                textEl.className = 'review-text';
+                textEl.textContent = data.comment || '';
+
+                card.appendChild(top);
+                card.appendChild(textEl);
+
+                if (data.productName) {
+                    const tag = document.createElement('div');
+                    tag.className = 'review-product';
+                    tag.textContent = data.productName;
+                    card.appendChild(tag);
+                }
+
+                frag.appendChild(card);
+            });
+
+            reviewList.innerHTML = '';
+            reviewList.appendChild(frag);
+
+            const avg = total / snapshot.size;
+            document.getElementById('avgScore').textContent = avg.toFixed(1);
+            document.getElementById('avgStars').textContent = starString(avg);
+            document.getElementById('totalCount').textContent = snapshot.size + ' ulasan';
+        }, (err) => {
+            console.error(err);
+            reviewList.innerHTML = '<div class="empty-state">Gagal memuat testimoni.</div>';
+        });
+    </script>
+</body>
+</html>
